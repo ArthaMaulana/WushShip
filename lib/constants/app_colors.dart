@@ -10,4 +10,5 @@ class AppColors {
   static const Color cardBlue = Color(0xFF3B5FE8);
   static const Color iconBlue = Color(0xFF2196F3);
   static const Color searchIconBlue = Color(0xFF8AA1F8);
+  static const Color darkGrey = Color(0xFF333333);
 }
