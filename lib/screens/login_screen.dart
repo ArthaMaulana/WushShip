@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
-import 'home_screen.dart';
+import 'login_form_screen.dart';
+import 'register_screen.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -13,7 +14,6 @@ class LoginScreen extends StatefulWidget {
 class _LoginScreenState extends State<LoginScreen> {
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
-  final bool _obscurePassword = true;
 
   @override
   void dispose() {
@@ -74,12 +74,13 @@ class _LoginScreenState extends State<LoginScreen> {
                     ),
                   ),
 
-                  const SizedBox(height: 10),
+                  const SizedBox(height: 20),
 
                   // Subtitle
                   const Text(
                     'Jelajahi semua fitur logistik yang ada di dalam aplikasi',
                     style: TextStyle(fontSize: 16, color: Color(0xFF9E9E9E)),
+                    textAlign: TextAlign.center,
                   ),
 
                   const SizedBox(height: 30),
@@ -90,8 +91,9 @@ class _LoginScreenState extends State<LoginScreen> {
                     height: 55,
                     child: ElevatedButton(
                       onPressed: () {
-                        Navigator.of(context).pushReplacement(
-                          MaterialPageRoute(builder: (_) => const HomeScreen()),
+                        Navigator.of(context).push(
+                          MaterialPageRoute(
+                              builder: (_) => const RegisterScreen()),
                         );
                       },
                       style: ElevatedButton.styleFrom(
@@ -119,8 +121,9 @@ class _LoginScreenState extends State<LoginScreen> {
                     height: 55,
                     child: OutlinedButton(
                       onPressed: () {
-                        Navigator.of(context).pushReplacement(
-                          MaterialPageRoute(builder: (_) => const HomeScreen()),
+                        Navigator.of(context).push(
+                          MaterialPageRoute(
+                              builder: (_) => const LoginFormScreen()),
                         );
                       },
                       style: OutlinedButton.styleFrom(
