@@ -1,6 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:wuship_project/screens/shipping_screen.dart';
+
 import '../widgets/bottom_nav_bar.dart';
+import 'chat_screen.dart';
+import 'check_price_screen.dart';
+import 'notification_screen.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -20,7 +25,7 @@ class _HomeScreenState extends State<HomeScreen> {
         statusBarIconBrightness: Brightness.light,
       ),
     );
-    
+
     return Scaffold(
       backgroundColor: const Color(0xFFF8F9FA),
       body: Stack(
@@ -76,15 +81,39 @@ class _HomeScreenState extends State<HomeScreen> {
                             ),
                             Row(
                               children: [
-                                _buildHeaderIcon(Icons.headset_mic_outlined),
+                                GestureDetector(
+                                  onTap: () {
+                                    Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder: (context) =>
+                                            const ChatScreen(),
+                                      ),
+                                    );
+                                  },
+                                  child: _buildHeaderIcon(
+                                      Icons.headset_mic_outlined),
+                                ),
                                 const SizedBox(width: 12),
-                                _buildHeaderIcon(Icons.notifications_outlined),
+                                GestureDetector(
+                                  onTap: () {
+                                    Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder: (context) =>
+                                            const NotificationScreen(),
+                                      ),
+                                    );
+                                  },
+                                  child: _buildHeaderIcon(
+                                      Icons.notifications_outlined),
+                                ),
                               ],
                             ),
                           ],
                         ),
                         const SizedBox(height: 40),
-                        
+
                         // Main tracking text
                         const Column(
                           children: [
@@ -115,27 +144,28 @@ class _HomeScreenState extends State<HomeScreen> {
                   ),
                 ),
               ),
-              
+
               // Main Content
               Expanded(
                 child: SingleChildScrollView(
-                  padding: const EdgeInsets.only(top: 40, left: 20, right: 20, bottom: 20),
+                  padding: const EdgeInsets.only(
+                      top: 40, left: 20, right: 20, bottom: 20),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       // Promo Banner - Kurir Siap Antar Barang
                       _buildPromoBanner(),
-                      
+
                       const SizedBox(height: 24),
-                      
+
                       // Fitur Layanan
                       _buildFiturLayanan(),
-                      
+
                       const SizedBox(height: 24),
-                      
+
                       // Drop Point
                       _buildDropPoint(),
-                      
+
                       const SizedBox(height: 20),
                     ],
                   ),
@@ -143,10 +173,11 @@ class _HomeScreenState extends State<HomeScreen> {
               ),
             ],
           ),
-          
+
           // Search Bar - Positioned to overlap
           Positioned(
-            top: MediaQuery.of(context).padding.top + 180, // Adjust position based on header
+            top: MediaQuery.of(context).padding.top +
+                180, // Adjust position based on header
             left: 20,
             right: 20,
             child: Container(
@@ -301,6 +332,14 @@ class _HomeScreenState extends State<HomeScreen> {
                 'Cek ongkir pengiriman',
                 Icons.local_offer_outlined,
                 const Color(0xFF4B7BF5),
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const CheckPriceScreen(),
+                    ),
+                  );
+                },
               ),
             ),
             const SizedBox(width: 16),
@@ -310,6 +349,14 @@ class _HomeScreenState extends State<HomeScreen> {
                 'Layanan Regular, tanpa ribet',
                 Icons.local_shipping_outlined,
                 const Color(0xFF00C896),
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const ShippingScreen(),
+                    ),
+                  );
+                },
               ),
             ),
           ],
@@ -425,11 +472,11 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
-  Widget _buildServiceCard(String title, String subtitle, IconData icon, Color color) {
+  Widget _buildServiceCard(
+      String title, String subtitle, IconData icon, Color color,
+      {VoidCallback? onTap}) {
     return GestureDetector(
-      onTap: () {
-        // Handle service card tap
-      },
+      onTap: onTap,
       child: Container(
         padding: const EdgeInsets.all(16),
         decoration: BoxDecoration(
