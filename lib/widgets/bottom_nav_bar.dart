@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import '../constants/app_colors.dart';
 
 class CustomBottomNavBar extends StatelessWidget {
   final int currentIndex;
@@ -14,44 +13,65 @@ class CustomBottomNavBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      decoration: const BoxDecoration(
+      margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
+      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 12),
+      decoration: BoxDecoration(
         color: Colors.white,
-        border: Border(top: BorderSide(color: Color(0xFFEEEEEE), width: 1)),
+        borderRadius: BorderRadius.circular(20),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withOpacity(0.08),
+            blurRadius: 15,
+            offset: const Offset(0, 2),
+          ),
+        ],
       ),
-      height: 56,
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [
-          _buildNavItem(0, Icons.home_outlined, 'Utama'),
-          _buildNavItem(1, Icons.local_shipping_outlined, 'Kirim'),
-          _buildNavItem(2, Icons.diamond_outlined, 'Premium'),
-          _buildNavItem(3, Icons.settings_outlined, 'Pengaturan'),
+          _buildNavItem(0, Icons.home_outlined, Icons.home, 'Utama'),
+          _buildNavItem(1, Icons.local_shipping_outlined, Icons.local_shipping, ''),
+          _buildNavItem(2, Icons.diamond_outlined, Icons.diamond, ''),
+          _buildNavItem(3, Icons.settings_outlined, Icons.settings, ''),
         ],
       ),
     );
   }
 
-  Widget _buildNavItem(int index, IconData icon, String label) {
+  Widget _buildNavItem(int index, IconData outlinedIcon, IconData filledIcon, String label) {
     final isSelected = index == currentIndex;
-    final Color color = isSelected ? AppColors.primaryBlue : Colors.grey;
-
-    return InkWell(
+    
+    return GestureDetector(
       onTap: () => onTap(index),
-      child: SizedBox(
-        width: 70,
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
+      child: AnimatedContainer(
+        duration: const Duration(milliseconds: 250),
+        padding: EdgeInsets.symmetric(
+          horizontal: isSelected ? 16 : 12,
+          vertical: 10,
+        ),
+        decoration: BoxDecoration(
+          color: isSelected ? const Color(0xFF4B7BF5) : Colors.transparent,
+          borderRadius: BorderRadius.circular(16),
+        ),
+        child: Row(
+          mainAxisSize: MainAxisSize.min,
           children: [
-            Icon(icon, color: color, size: 24),
-            const SizedBox(height: 4),
-            Text(
-              label,
-              style: TextStyle(
-                fontSize: 12,
-                color: color,
-                fontWeight: isSelected ? FontWeight.w500 : FontWeight.normal,
-              ),
+            Icon(
+              isSelected ? filledIcon : outlinedIcon,
+              color: isSelected ? Colors.white : const Color(0xFF8F9BB3),
+              size: 22,
             ),
+            if (isSelected && label.isNotEmpty) ...[
+              const SizedBox(width: 8),
+              Text(
+                label,
+                style: const TextStyle(
+                  color: Colors.white,
+                  fontSize: 14,
+                  fontWeight: FontWeight.w600,
+                ),
+              ),
+            ],
           ],
         ),
       ),
