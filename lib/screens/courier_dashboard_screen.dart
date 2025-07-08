@@ -130,13 +130,13 @@ class _CourierDashboardScreenState extends State<CourierDashboardScreen> {
 
                       const SizedBox(height: 24),
 
-                      // Quick Actions for Courier
-                      _buildQuickActions(),
-
-                      const SizedBox(height: 24),
-
                       // Detailed Statistics
                       _buildDetailedStatistics(),
+
+                      const SizedBox(height: 30),
+
+                      // Action Buttons
+                      _buildActionButtons(),
 
                       const SizedBox(height: 30),
 
@@ -288,44 +288,6 @@ class _CourierDashboardScreenState extends State<CourierDashboardScreen> {
     );
   }
 
-  Widget _buildQuickActions() {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        const Text(
-          'Aksi Cepat',
-          style: TextStyle(
-            fontSize: 18,
-            fontWeight: FontWeight.bold,
-            color: Color(0xFF2D3142),
-          ),
-        ),
-        const SizedBox(height: 16),
-        Row(
-          children: [
-            Expanded(
-              child: _buildServiceCard(
-                'Pickup',
-                'Ambil paket',
-                Icons.location_on_outlined,
-                const Color(0xFF4B7BF5),
-              ),
-            ),
-            const SizedBox(width: 16),
-            Expanded(
-              child: _buildServiceCard(
-                'Delivery',
-                'Antar paket',
-                Icons.local_shipping_outlined,
-                const Color(0xFF00C896),
-              ),
-            ),
-          ],
-        ),
-      ],
-    );
-  }
-
   Widget _buildDetailedStatistics() {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -387,50 +349,51 @@ class _CourierDashboardScreenState extends State<CourierDashboardScreen> {
             ),
           ],
         ),
-        const SizedBox(height: 30),
-        // Action Buttons
-        Row(
-          children: [
-            Expanded(
-              child: Container(
-                padding: const EdgeInsets.symmetric(vertical: 16),
-                decoration: BoxDecoration(
-                  color: const Color(0xFF4B7BF5),
-                  borderRadius: BorderRadius.circular(25),
-                ),
-                child: const Center(
-                  child: Text(
-                    'Akan Datang',
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 16,
-                      fontWeight: FontWeight.w600,
-                    ),
-                  ),
+      ],
+    );
+  }
+
+  Widget _buildActionButtons() {
+    return Row(
+      children: [
+        Expanded(
+          child: Container(
+            padding: const EdgeInsets.symmetric(vertical: 16),
+            decoration: BoxDecoration(
+              color: const Color(0xFF4B7BF5),
+              borderRadius: BorderRadius.circular(25),
+            ),
+            child: const Center(
+              child: Text(
+                'Akan Datang',
+                style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 16,
+                  fontWeight: FontWeight.w600,
                 ),
               ),
             ),
-            const SizedBox(width: 16),
-            Expanded(
-              child: Container(
-                padding: const EdgeInsets.symmetric(vertical: 16),
-                decoration: BoxDecoration(
-                  color: Colors.transparent,
-                  borderRadius: BorderRadius.circular(25),
-                ),
-                child: const Center(
-                  child: Text(
-                    'List Paket',
-                    style: TextStyle(
-                      color: Color(0xFF4B7BF5),
-                      fontSize: 16,
-                      fontWeight: FontWeight.w600,
-                    ),
-                  ),
+          ),
+        ),
+        const SizedBox(width: 16),
+        Expanded(
+          child: Container(
+            padding: const EdgeInsets.symmetric(vertical: 16),
+            decoration: BoxDecoration(
+              color: Colors.transparent,
+              borderRadius: BorderRadius.circular(25),
+            ),
+            child: const Center(
+              child: Text(
+                'List Paket',
+                style: TextStyle(
+                  color: Color(0xFF4B7BF5),
+                  fontSize: 16,
+                  fontWeight: FontWeight.w600,
                 ),
               ),
             ),
-          ],
+          ),
         ),
       ],
     );
@@ -534,59 +497,6 @@ class _CourierDashboardScreenState extends State<CourierDashboardScreen> {
     );
   }
 
-  Widget _buildServiceCard(
-      String title, String subtitle, IconData icon, Color color) {
-    return Container(
-      padding: const EdgeInsets.all(16),
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(12),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.black.withOpacity(0.06),
-            blurRadius: 10,
-            offset: const Offset(0, 3),
-          ),
-        ],
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Container(
-            padding: const EdgeInsets.all(12),
-            decoration: BoxDecoration(
-              color: color.withOpacity(0.1),
-              borderRadius: BorderRadius.circular(12),
-            ),
-            child: Icon(
-              icon,
-              color: color,
-              size: 24,
-            ),
-          ),
-          const SizedBox(height: 12),
-          Text(
-            title,
-            style: const TextStyle(
-              fontSize: 16,
-              fontWeight: FontWeight.bold,
-              color: Color(0xFF2D3142),
-            ),
-          ),
-          const SizedBox(height: 4),
-          Text(
-            subtitle,
-            style: const TextStyle(
-              fontSize: 12,
-              color: Color(0xFF8F9BB3),
-              fontWeight: FontWeight.w500,
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-
   Widget _buildCourierList() {
     return Column(
       children: [
@@ -595,7 +505,7 @@ class _CourierDashboardScreenState extends State<CourierDashboardScreen> {
           address: 'JL.1 Kampung baru no.423',
           status: 'Cod',
           statusColor: const Color(0xFF4B7BF5),
-          avatar: Icons.person,
+          avatarColor: Colors.orange,
         ),
         const SizedBox(height: 12),
         _buildCourierItem(
@@ -603,7 +513,7 @@ class _CourierDashboardScreenState extends State<CourierDashboardScreen> {
           address: 'JL.1 Kampung baru no.1000',
           status: 'Non Cod',
           statusColor: Colors.red,
-          avatar: Icons.person,
+          avatarColor: const Color(0xFF4B7BF5),
         ),
         const SizedBox(height: 12),
         _buildCourierItem(
@@ -611,7 +521,7 @@ class _CourierDashboardScreenState extends State<CourierDashboardScreen> {
           address: 'JL.1 Kampung baru no.2',
           status: 'Cod',
           statusColor: const Color(0xFF4B7BF5),
-          avatar: Icons.person,
+          avatarColor: Colors.green,
         ),
       ],
     );
@@ -622,7 +532,7 @@ class _CourierDashboardScreenState extends State<CourierDashboardScreen> {
     required String address,
     required String status,
     required Color statusColor,
-    required IconData avatar,
+    required Color avatarColor,
   }) {
     return Container(
       padding: const EdgeInsets.all(16),
@@ -643,12 +553,12 @@ class _CourierDashboardScreenState extends State<CourierDashboardScreen> {
             width: 50,
             height: 50,
             decoration: BoxDecoration(
-              color: const Color(0xFF4B7BF5).withOpacity(0.1),
+              color: avatarColor,
               shape: BoxShape.circle,
             ),
-            child: Icon(
-              avatar,
-              color: const Color(0xFF4B7BF5),
+            child: const Icon(
+              Icons.person,
+              color: Colors.white,
               size: 24,
             ),
           ),
