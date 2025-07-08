@@ -1,21 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:wuship_project/screens/shipping_screen.dart';
-
 import '../widgets/bottom_nav_bar.dart';
-import 'chat_screen.dart';
-import 'check_price_screen.dart';
-import 'notification_screen.dart';
-import 'profile_screen.dart';
 
-class HomeScreen extends StatefulWidget {
-  const HomeScreen({super.key});
+class CourierDashboardScreen extends StatefulWidget {
+  const CourierDashboardScreen({super.key});
 
   @override
-  State<HomeScreen> createState() => _HomeScreenState();
+  State<CourierDashboardScreen> createState() => _CourierDashboardScreenState();
 }
 
-class _HomeScreenState extends State<HomeScreen> {
+class _CourierDashboardScreenState extends State<CourierDashboardScreen> {
   int _currentIndex = 0;
 
   @override
@@ -71,7 +65,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                   ),
                                 ),
                                 Text(
-                                  'WushShip',
+                                  'WushShip Courier',
                                   style: TextStyle(
                                     color: Colors.white,
                                     fontSize: 16,
@@ -82,33 +76,9 @@ class _HomeScreenState extends State<HomeScreen> {
                             ),
                             Row(
                               children: [
-                                GestureDetector(
-                                  onTap: () {
-                                    Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                        builder: (context) =>
-                                            const ChatScreen(),
-                                      ),
-                                    );
-                                  },
-                                  child: _buildHeaderIcon(
-                                      Icons.headset_mic_outlined),
-                                ),
+                                _buildHeaderIcon(Icons.headset_mic_outlined),
                                 const SizedBox(width: 12),
-                                GestureDetector(
-                                  onTap: () {
-                                    Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                        builder: (context) =>
-                                            const NotificationScreen(),
-                                      ),
-                                    );
-                                  },
-                                  child: _buildHeaderIcon(
-                                      Icons.notifications_outlined),
-                                ),
+                                _buildHeaderIcon(Icons.notifications_outlined),
                               ],
                             ),
                           ],
@@ -119,7 +89,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         const Column(
                           children: [
                             Text(
-                              'Melacak Kiriman Anda',
+                              'Dashboard Kurir',
                               style: TextStyle(
                                 color: Colors.white,
                                 fontSize: 24,
@@ -129,7 +99,7 @@ class _HomeScreenState extends State<HomeScreen> {
                             ),
                             SizedBox(height: 8),
                             Text(
-                              'Silakan masukkan pelacakan Anda',
+                              'Kelola pengiriman dan lacak status barang',
                               style: TextStyle(
                                 color: Colors.white70,
                                 fontSize: 14,
@@ -154,18 +124,18 @@ class _HomeScreenState extends State<HomeScreen> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      // Promo Banner - Kurir Siap Antar Barang
-                      _buildPromoBanner(),
+                      // Courier Statistics Banner
+                      _buildCourierStatsBanner(),
 
                       const SizedBox(height: 24),
 
-                      // Fitur Layanan
-                      _buildFiturLayanan(),
+                      // Quick Actions for Courier
+                      _buildQuickActions(),
 
                       const SizedBox(height: 24),
 
-                      // Drop Point
-                      _buildDropPoint(),
+                      // Detailed Statistics
+                      _buildDetailedStatistics(),
 
                       const SizedBox(height: 20),
                     ],
@@ -206,7 +176,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   const Expanded(
                     child: TextField(
                       decoration: InputDecoration(
-                        hintText: 'Masukkan Nomor Pelacakan Anda',
+                        hintText: 'Cari Paket Pengiriman',
                         border: InputBorder.none,
                         hintStyle: TextStyle(
                           color: Color(0xFF8F9BB3),
@@ -240,23 +210,12 @@ class _HomeScreenState extends State<HomeScreen> {
           setState(() {
             _currentIndex = index;
           });
-
-          // Navigate to different screens based on bottom nav selection
-          if (index == 3) {
-            // Settings/Profile icon
-            Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (context) => const ProfileScreen(),
-              ),
-            );
-          }
         },
       ),
     );
   }
 
-  Widget _buildPromoBanner() {
+  Widget _buildCourierStatsBanner() {
     return Container(
       width: double.infinity,
       padding: const EdgeInsets.all(20),
@@ -278,15 +237,15 @@ class _HomeScreenState extends State<HomeScreen> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 const Text(
-                  'Kurir Siap',
+                  'Paket Aktif',
                   style: TextStyle(
                     color: Colors.white,
-                    fontSize: 24,
-                    fontWeight: FontWeight.bold,
+                    fontSize: 16,
+                    fontWeight: FontWeight.w500,
                   ),
                 ),
                 const Text(
-                  'Antar Barang',
+                  '12 Pengiriman',
                   style: TextStyle(
                     color: Colors.white,
                     fontSize: 24,
@@ -295,7 +254,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 ),
                 const SizedBox(height: 8),
                 const Text(
-                  'Berlangganan untuk layanan premium',
+                  'Status hari ini',
                   style: TextStyle(
                     color: Colors.white70,
                     fontSize: 14,
@@ -304,7 +263,7 @@ class _HomeScreenState extends State<HomeScreen> {
               ],
             ),
           ),
-          // Ilustrasi kurir dengan motor
+          // Delivery illustration
           Container(
             width: 80,
             height: 80,
@@ -323,12 +282,12 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
-  Widget _buildFiturLayanan() {
+  Widget _buildQuickActions() {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         const Text(
-          'Fitur Layanan',
+          'Aksi Cepat',
           style: TextStyle(
             fontSize: 18,
             fontWeight: FontWeight.bold,
@@ -340,35 +299,19 @@ class _HomeScreenState extends State<HomeScreen> {
           children: [
             Expanded(
               child: _buildServiceCard(
-                'Cek Harga',
-                'Cek ongkir pengiriman',
-                Icons.local_offer_outlined,
+                'Pickup',
+                'Ambil paket',
+                Icons.location_on_outlined,
                 const Color(0xFF4B7BF5),
-                onTap: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => const CheckPriceScreen(),
-                    ),
-                  );
-                },
               ),
             ),
             const SizedBox(width: 16),
             Expanded(
               child: _buildServiceCard(
-                'Kirim',
-                'Layanan Regular',
+                'Delivery',
+                'Antar paket',
                 Icons.local_shipping_outlined,
                 const Color(0xFF00C896),
-                onTap: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => const ShippingScreen(),
-                    ),
-                  );
-                },
               ),
             ),
           ],
@@ -377,12 +320,12 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
-  Widget _buildDropPoint() {
+  Widget _buildDetailedStatistics() {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         const Text(
-          'Drop Point',
+          'Statistik Detil',
           style: TextStyle(
             fontSize: 18,
             fontWeight: FontWeight.bold,
@@ -391,58 +334,68 @@ class _HomeScreenState extends State<HomeScreen> {
         ),
         const SizedBox(height: 16),
         Container(
-          height: 200,
+          padding: const EdgeInsets.all(20),
           decoration: BoxDecoration(
-            color: Colors.grey[200],
-            borderRadius: BorderRadius.circular(12),
+            color: Colors.white,
+            borderRadius: BorderRadius.circular(16),
+            boxShadow: [
+              BoxShadow(
+                color: Colors.black.withOpacity(0.06),
+                blurRadius: 10,
+                offset: const Offset(0, 3),
+              ),
+            ],
           ),
-          child: Stack(
+          child: Column(
             children: [
-              // Placeholder untuk map
-              Container(
-                width: double.infinity,
-                height: double.infinity,
-                decoration: BoxDecoration(
-                  color: Colors.grey[300],
-                  borderRadius: BorderRadius.circular(12),
-                ),
-                child: const Center(
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Icon(
-                        Icons.map_outlined,
-                        size: 48,
-                        color: Colors.grey,
-                      ),
-                      SizedBox(height: 8),
-                      Text(
-                        'Peta Drop Point',
-                        style: TextStyle(
-                          color: Colors.grey,
-                          fontSize: 14,
-                          fontWeight: FontWeight.w500,
-                        ),
-                      ),
-                    ],
+              Row(
+                children: [
+                  Expanded(
+                    child: _buildStatItem(
+                      icon: Icons.inventory_2_outlined,
+                      iconColor: const Color(0xFF4B7BF5),
+                      title: 'Paket Aktif',
+                      count: '12',
+                      countColor: const Color(0xFF4B7BF5),
+                    ),
                   ),
-                ),
+                  const SizedBox(width: 20),
+                  Expanded(
+                    child: _buildStatItem(
+                      icon: Icons.schedule,
+                      iconColor: Colors.orange,
+                      title: 'Pending',
+                      count: '22',
+                      countColor: Colors.orange,
+                    ),
+                  ),
+                ],
               ),
-              // Mock location pins
-              Positioned(
-                top: 30,
-                left: 40,
-                child: _buildLocationPin(Colors.red),
-              ),
-              Positioned(
-                top: 80,
-                right: 50,
-                child: _buildLocationPin(Colors.blue),
-              ),
-              Positioned(
-                bottom: 40,
-                left: 80,
-                child: _buildLocationPin(Colors.orange),
+              
+              const SizedBox(height: 30),
+              
+              Row(
+                children: [
+                  Expanded(
+                    child: _buildStatItem(
+                      icon: Icons.check_circle_outline,
+                      iconColor: Colors.green,
+                      title: 'Selesai',
+                      count: '13',
+                      countColor: Colors.green,
+                    ),
+                  ),
+                  const SizedBox(width: 20),
+                  Expanded(
+                    child: _buildStatItem(
+                      icon: Icons.cancel_outlined,
+                      iconColor: Colors.red,
+                      title: 'Batal',
+                      count: '2',
+                      countColor: Colors.red,
+                    ),
+                  ),
+                ],
               ),
             ],
           ),
@@ -451,20 +404,48 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
-  Widget _buildLocationPin(Color color) {
-    return Container(
-      width: 24,
-      height: 24,
-      decoration: BoxDecoration(
-        color: color,
-        shape: BoxShape.circle,
-        border: Border.all(color: Colors.white, width: 2),
-      ),
-      child: const Icon(
-        Icons.location_on,
-        color: Colors.white,
-        size: 12,
-      ),
+  Widget _buildStatItem({
+    required IconData icon,
+    required Color iconColor,
+    required String title,
+    required String count,
+    required Color countColor,
+  }) {
+    return Column(
+      children: [
+        Container(
+          width: 60,
+          height: 60,
+          decoration: BoxDecoration(
+            color: iconColor.withOpacity(0.1),
+            borderRadius: BorderRadius.circular(30),
+          ),
+          child: Icon(
+            icon,
+            color: iconColor,
+            size: 30,
+          ),
+        ),
+        const SizedBox(height: 12),
+        Text(
+          title,
+          style: const TextStyle(
+            fontSize: 14,
+            color: Color(0xFF2D3142),
+            fontWeight: FontWeight.w500,
+          ),
+          textAlign: TextAlign.center,
+        ),
+        const SizedBox(height: 4),
+        Text(
+          count,
+          style: TextStyle(
+            fontSize: 24,
+            color: countColor,
+            fontWeight: FontWeight.bold,
+          ),
+        ),
+      ],
     );
   }
 
@@ -485,58 +466,54 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   Widget _buildServiceCard(
-      String title, String subtitle, IconData icon, Color color,
-      {VoidCallback? onTap}) {
-    return GestureDetector(
-      onTap: onTap,
-      child: Container(
-        padding: const EdgeInsets.all(16),
-        decoration: BoxDecoration(
-          color: Colors.white,
-          borderRadius: BorderRadius.circular(12),
-          boxShadow: [
-            BoxShadow(
-              color: Colors.black.withOpacity(0.06),
-              blurRadius: 10,
-              offset: const Offset(0, 3),
+      String title, String subtitle, IconData icon, Color color) {
+    return Container(
+      padding: const EdgeInsets.all(16),
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(12),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withOpacity(0.06),
+            blurRadius: 10,
+            offset: const Offset(0, 3),
+          ),
+        ],
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Container(
+            padding: const EdgeInsets.all(12),
+            decoration: BoxDecoration(
+              color: color.withOpacity(0.1),
+              borderRadius: BorderRadius.circular(12),
             ),
-          ],
-        ),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Container(
-              padding: const EdgeInsets.all(12),
-              decoration: BoxDecoration(
-                color: color.withOpacity(0.1),
-                borderRadius: BorderRadius.circular(12),
-              ),
-              child: Icon(
-                icon,
-                color: color,
-                size: 24,
-              ),
+            child: Icon(
+              icon,
+              color: color,
+              size: 24,
             ),
-            const SizedBox(height: 12),
-            Text(
-              title,
-              style: const TextStyle(
-                fontSize: 16,
-                fontWeight: FontWeight.bold,
-                color: Color(0xFF2D3142),
-              ),
+          ),
+          const SizedBox(height: 12),
+          Text(
+            title,
+            style: const TextStyle(
+              fontSize: 16,
+              fontWeight: FontWeight.bold,
+              color: Color(0xFF2D3142),
             ),
-            const SizedBox(height: 4),
-            Text(
-              subtitle,
-              style: const TextStyle(
-                fontSize: 12,
-                color: Color(0xFF8F9BB3),
-                fontWeight: FontWeight.w500,
-              ),
+          ),
+          const SizedBox(height: 4),
+          Text(
+            subtitle,
+            style: const TextStyle(
+              fontSize: 12,
+              color: Color(0xFF8F9BB3),
+              fontWeight: FontWeight.w500,
             ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }

@@ -99,7 +99,7 @@ class _ShippingScreenState extends State<ShippingScreen> {
                     'Contoh : +6289876543210'),
                 const SizedBox(height: 16),
                 _buildLocationField('Area Penjemputan',
-                    'Kelurahan, Kecamatan, Kabupaten, Provinsi, Negara'),
+                    'Kelurahan, Kecamatan, Kabupaten, Provinsi'),
                 const SizedBox(height: 16),
                 _buildLocationField(
                     'Pilih Lokasi', 'Pilih Lokasi Spesifik Anda'),
@@ -146,7 +146,7 @@ class _ShippingScreenState extends State<ShippingScreen> {
                     'Contoh : +6289876543210'),
                 const SizedBox(height: 16),
                 _buildLocationField('Area Tujuan',
-                    'Kelurahan , Kecamatan , Kabupaten , Provinis , Negara'),
+                    'Kelurahan , Kecamatan , Kabupaten , Provinsi'),
                 const SizedBox(height: 16),
                 _buildLocationField('Alamat Lengkap', 'Contoh : Jln, Xxx Xxx',
                     hasPreview: true),
@@ -302,7 +302,7 @@ class _ShippingScreenState extends State<ShippingScreen> {
         ),
         const SizedBox(height: 8),
         Container(
-          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 1),
+          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 0),
           decoration: BoxDecoration(
             color: const Color(0xFFE3F2FD),
             borderRadius: BorderRadius.circular(36),
@@ -341,7 +341,7 @@ class _ShippingScreenState extends State<ShippingScreen> {
           padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
           decoration: BoxDecoration(
             color: const Color(0xFFE3F2FD),
-            borderRadius: BorderRadius.circular(12),
+            borderRadius: BorderRadius.circular(36),
           ),
           child: Row(
             children: [
@@ -378,7 +378,7 @@ class _ShippingScreenState extends State<ShippingScreen> {
           padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
           decoration: BoxDecoration(
             color: const Color(0xFFE3F2FD),
-            borderRadius: BorderRadius.circular(12),
+            borderRadius: BorderRadius.circular(36),
           ),
           child: Row(
             children: [
@@ -425,17 +425,17 @@ class _ShippingScreenState extends State<ShippingScreen> {
           children: [
             Expanded(
               child: _buildInputField(
-                  'Panjang', _itemLengthController, 'Contoh : 10'),
+                  'Panjang', _itemLengthController, 'Contoh: 10'),
+            ),
+            const SizedBox(width: 16),
+            Expanded(
+              child:
+                  _buildInputField('lebar', _itemWidthController, 'Contoh: 10'),
             ),
             const SizedBox(width: 16),
             Expanded(
               child: _buildInputField(
-                  'lebar', _itemWidthController, 'Contoh : 10'),
-            ),
-            const SizedBox(width: 16),
-            Expanded(
-              child: _buildInputField(
-                  'tinggi', _itemHeightController, 'Contoh : 10'),
+                  'tinggi', _itemHeightController, 'Contoh: 10'),
             ),
           ],
         ),
@@ -457,7 +457,7 @@ class _ShippingScreenState extends State<ShippingScreen> {
               padding: const EdgeInsets.symmetric(vertical: 12),
               decoration: BoxDecoration(
                 color: _selectedPaymentType == 'COD'
-                    ? const Color(0xFFE0E0E0)
+                    ? const Color(0xFF4B7BF5)
                     : const Color(0xFFE3F2FD),
                 borderRadius: BorderRadius.circular(24),
               ),
@@ -468,8 +468,8 @@ class _ShippingScreenState extends State<ShippingScreen> {
                     fontSize: 16,
                     fontWeight: FontWeight.w500,
                     color: _selectedPaymentType == 'COD'
-                        ? Colors.black
-                        : const Color(0xFF9E9E9E),
+                        ? Colors.white
+                        : const Color(0xFF4B7BF5),
                   ),
                 ),
               ),

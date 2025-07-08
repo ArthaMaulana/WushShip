@@ -176,14 +176,14 @@ class _CheckPriceScreenState extends State<CheckPriceScreen> {
                           ],
                         ),
                         if (_isDimensionEnabled) ...[
-                          const SizedBox(height: 16),
+                          const SizedBox(height: 2),
                           Row(
                             children: [
                               Expanded(
                                 child: _buildDimensionField(
                                     'Length', _lengthController),
                               ),
-                              const SizedBox(width: 12),
+                              const SizedBox(width: 10),
                               const Text(
                                 'X',
                                 style: TextStyle(
@@ -192,12 +192,12 @@ class _CheckPriceScreenState extends State<CheckPriceScreen> {
                                   color: Colors.black,
                                 ),
                               ),
-                              const SizedBox(width: 12),
+                              const SizedBox(width: 10),
                               Expanded(
                                 child: _buildDimensionField(
                                     'Width', _widthController),
                               ),
-                              const SizedBox(width: 12),
+                              const SizedBox(width: 10),
                               const Text(
                                 'X',
                                 style: TextStyle(
@@ -446,7 +446,7 @@ class _CheckPriceScreenState extends State<CheckPriceScreen> {
           decoration: BoxDecoration(
             color: Colors.white,
             border: Border.all(color: const Color(0xFFE0E0E0), width: 0.5),
-            borderRadius: BorderRadius.circular(6),
+            borderRadius: BorderRadius.circular(24),
           ),
           child: Center(
             child: TextField(
@@ -513,7 +513,7 @@ class DashedLinePainter extends CustomPainter {
       ..style = PaintingStyle.stroke;
 
     const dashWidth = 3.0;
-    const dashSpace = 2.0;
+    const dashSpace = 4.0;
     double startY = 0;
 
     while (startY < size.height) {
