@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+
 import '../widgets/bottom_nav_bar.dart';
 
 class CourierDashboardScreen extends StatefulWidget {
@@ -136,6 +137,11 @@ class _CourierDashboardScreenState extends State<CourierDashboardScreen> {
 
                       // Detailed Statistics
                       _buildDetailedStatistics(),
+
+                      const SizedBox(height: 30),
+
+                      // Courier List
+                      _buildCourierList(),
 
                       const SizedBox(height: 20),
                     ],
@@ -325,127 +331,190 @@ class _CourierDashboardScreenState extends State<CourierDashboardScreen> {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         const Text(
-          'Statistik Detil',
+          'Statistik',
           style: TextStyle(
-            fontSize: 18,
+            fontSize: 20,
             fontWeight: FontWeight.bold,
-            color: Color(0xFF2D3142),
+            color: Colors.black,
           ),
         ),
+        const SizedBox(height: 20),
+        Row(
+          children: [
+            Expanded(
+              child: _buildStatCard(
+                icon: Icons.inventory_2_outlined,
+                iconColor: const Color(0xFF4B7BF5),
+                title: 'Paket Aktif',
+                count: '12',
+                countColor: const Color(0xFF4B7BF5),
+              ),
+            ),
+            const SizedBox(width: 16),
+            Expanded(
+              child: _buildStatCard(
+                icon: Icons.schedule,
+                iconColor: const Color(0xFF4B7BF5),
+                title: 'Paket Pending',
+                count: '22',
+                countColor: Colors.orange,
+              ),
+            ),
+          ],
+        ),
         const SizedBox(height: 16),
-        Container(
-          padding: const EdgeInsets.all(20),
-          decoration: BoxDecoration(
-            color: Colors.white,
-            borderRadius: BorderRadius.circular(16),
-            boxShadow: [
-              BoxShadow(
-                color: Colors.black.withOpacity(0.06),
-                blurRadius: 10,
-                offset: const Offset(0, 3),
+        Row(
+          children: [
+            Expanded(
+              child: _buildStatCard(
+                icon: Icons.inventory_2_outlined,
+                iconColor: const Color(0xFF4B7BF5),
+                title: 'Selesai',
+                count: '13',
+                countColor: Colors.green,
               ),
-            ],
-          ),
-          child: Column(
-            children: [
-              Row(
-                children: [
-                  Expanded(
-                    child: _buildStatItem(
-                      icon: Icons.inventory_2_outlined,
-                      iconColor: const Color(0xFF4B7BF5),
-                      title: 'Paket Aktif',
-                      count: '12',
-                      countColor: const Color(0xFF4B7BF5),
-                    ),
-                  ),
-                  const SizedBox(width: 20),
-                  Expanded(
-                    child: _buildStatItem(
-                      icon: Icons.schedule,
-                      iconColor: Colors.orange,
-                      title: 'Pending',
-                      count: '22',
-                      countColor: Colors.orange,
-                    ),
-                  ),
-                ],
+            ),
+            const SizedBox(width: 16),
+            Expanded(
+              child: _buildStatCard(
+                icon: Icons.inventory_2_outlined,
+                iconColor: const Color(0xFF4B7BF5),
+                title: 'Batal',
+                count: '2',
+                countColor: Colors.red,
+                hasRedBadge: true,
               ),
-              
-              const SizedBox(height: 30),
-              
-              Row(
-                children: [
-                  Expanded(
-                    child: _buildStatItem(
-                      icon: Icons.check_circle_outline,
-                      iconColor: Colors.green,
-                      title: 'Selesai',
-                      count: '13',
-                      countColor: Colors.green,
+            ),
+          ],
+        ),
+        const SizedBox(height: 30),
+        // Action Buttons
+        Row(
+          children: [
+            Expanded(
+              child: Container(
+                padding: const EdgeInsets.symmetric(vertical: 16),
+                decoration: BoxDecoration(
+                  color: const Color(0xFF4B7BF5),
+                  borderRadius: BorderRadius.circular(25),
+                ),
+                child: const Center(
+                  child: Text(
+                    'Akan Datang',
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 16,
+                      fontWeight: FontWeight.w600,
                     ),
                   ),
-                  const SizedBox(width: 20),
-                  Expanded(
-                    child: _buildStatItem(
-                      icon: Icons.cancel_outlined,
-                      iconColor: Colors.red,
-                      title: 'Batal',
-                      count: '2',
-                      countColor: Colors.red,
-                    ),
-                  ),
-                ],
+                ),
               ),
-            ],
-          ),
+            ),
+            const SizedBox(width: 16),
+            Expanded(
+              child: Container(
+                padding: const EdgeInsets.symmetric(vertical: 16),
+                decoration: BoxDecoration(
+                  color: Colors.transparent,
+                  borderRadius: BorderRadius.circular(25),
+                ),
+                child: const Center(
+                  child: Text(
+                    'List Paket',
+                    style: TextStyle(
+                      color: Color(0xFF4B7BF5),
+                      fontSize: 16,
+                      fontWeight: FontWeight.w600,
+                    ),
+                  ),
+                ),
+              ),
+            ),
+          ],
         ),
       ],
     );
   }
 
-  Widget _buildStatItem({
+  Widget _buildStatCard({
     required IconData icon,
     required Color iconColor,
     required String title,
     required String count,
     required Color countColor,
+    bool hasRedBadge = false,
   }) {
-    return Column(
-      children: [
-        Container(
-          width: 60,
-          height: 60,
-          decoration: BoxDecoration(
-            color: iconColor.withOpacity(0.1),
-            borderRadius: BorderRadius.circular(30),
+    return Container(
+      padding: const EdgeInsets.all(20),
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(16),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withOpacity(0.05),
+            blurRadius: 10,
+            offset: const Offset(0, 2),
           ),
-          child: Icon(
-            icon,
-            color: iconColor,
-            size: 30,
+        ],
+      ),
+      child: Column(
+        children: [
+          Stack(
+            children: [
+              Container(
+                width: 60,
+                height: 60,
+                decoration: BoxDecoration(
+                  color: iconColor.withOpacity(0.1),
+                  borderRadius: BorderRadius.circular(30),
+                ),
+                child: Icon(
+                  icon,
+                  color: iconColor,
+                  size: 30,
+                ),
+              ),
+              if (hasRedBadge)
+                Positioned(
+                  top: 0,
+                  right: 0,
+                  child: Container(
+                    width: 16,
+                    height: 16,
+                    decoration: const BoxDecoration(
+                      color: Colors.red,
+                      shape: BoxShape.circle,
+                    ),
+                    child: const Icon(
+                      Icons.close,
+                      color: Colors.white,
+                      size: 10,
+                    ),
+                  ),
+                ),
+            ],
           ),
-        ),
-        const SizedBox(height: 12),
-        Text(
-          title,
-          style: const TextStyle(
-            fontSize: 14,
-            color: Color(0xFF2D3142),
-            fontWeight: FontWeight.w500,
+          const SizedBox(height: 12),
+          Text(
+            title,
+            style: const TextStyle(
+              fontSize: 14,
+              color: Colors.black,
+              fontWeight: FontWeight.w500,
+            ),
+            textAlign: TextAlign.center,
           ),
-          textAlign: TextAlign.center,
-        ),
-        const SizedBox(height: 4),
-        Text(
-          count,
-          style: TextStyle(
-            fontSize: 24,
-            color: countColor,
-            fontWeight: FontWeight.bold,
+          const SizedBox(height: 4),
+          Text(
+            count,
+            style: TextStyle(
+              fontSize: 24,
+              color: countColor,
+              fontWeight: FontWeight.bold,
+            ),
           ),
-        ),
-      ],
+        ],
+      ),
     );
   }
 
@@ -511,6 +580,108 @@ class _CourierDashboardScreenState extends State<CourierDashboardScreen> {
               fontSize: 12,
               color: Color(0xFF8F9BB3),
               fontWeight: FontWeight.w500,
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildCourierList() {
+    return Column(
+      children: [
+        _buildCourierItem(
+          name: 'Muhammad Rakha R',
+          address: 'JL.1 Kampung baru no.423',
+          status: 'Cod',
+          statusColor: const Color(0xFF4B7BF5),
+          avatar: Icons.person,
+        ),
+        const SizedBox(height: 12),
+        _buildCourierItem(
+          name: 'Artha Maulana',
+          address: 'JL.1 Kampung baru no.1000',
+          status: 'Non Cod',
+          statusColor: Colors.red,
+          avatar: Icons.person,
+        ),
+        const SizedBox(height: 12),
+        _buildCourierItem(
+          name: 'Angga Ramadhan',
+          address: 'JL.1 Kampung baru no.2',
+          status: 'Cod',
+          statusColor: const Color(0xFF4B7BF5),
+          avatar: Icons.person,
+        ),
+      ],
+    );
+  }
+
+  Widget _buildCourierItem({
+    required String name,
+    required String address,
+    required String status,
+    required Color statusColor,
+    required IconData avatar,
+  }) {
+    return Container(
+      padding: const EdgeInsets.all(16),
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(12),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withOpacity(0.05),
+            blurRadius: 8,
+            offset: const Offset(0, 2),
+          ),
+        ],
+      ),
+      child: Row(
+        children: [
+          Container(
+            width: 50,
+            height: 50,
+            decoration: BoxDecoration(
+              color: const Color(0xFF4B7BF5).withOpacity(0.1),
+              shape: BoxShape.circle,
+            ),
+            child: Icon(
+              avatar,
+              color: const Color(0xFF4B7BF5),
+              size: 24,
+            ),
+          ),
+          const SizedBox(width: 16),
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  name,
+                  style: const TextStyle(
+                    fontSize: 16,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.black,
+                  ),
+                ),
+                const SizedBox(height: 4),
+                Text(
+                  address,
+                  style: const TextStyle(
+                    fontSize: 14,
+                    color: Colors.grey,
+                  ),
+                ),
+              ],
+            ),
+          ),
+          Text(
+            status,
+            style: TextStyle(
+              fontSize: 14,
+              fontWeight: FontWeight.w600,
+              color: statusColor,
             ),
           ),
         ],
