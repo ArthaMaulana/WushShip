@@ -177,15 +177,15 @@ class _HomeScreenState extends State<HomeScreen> {
           // Search Bar - Positioned to overlap
           Positioned(
             top: MediaQuery.of(context).padding.top +
-                180, // Adjust position based on header
-            left: 20,
-            right: 20,
+                190, // Adjust position based on header
+            left: 50,
+            right: 50,
             child: Container(
               height: 56,
-              padding: const EdgeInsets.symmetric(horizontal: 16),
+              padding: const EdgeInsets.symmetric(horizontal: 8),
               decoration: BoxDecoration(
                 color: Colors.white,
-                borderRadius: BorderRadius.circular(16),
+                borderRadius: BorderRadius.circular(32),
                 boxShadow: [
                   BoxShadow(
                     color: Colors.black.withOpacity(0.1),
@@ -219,12 +219,12 @@ class _HomeScreenState extends State<HomeScreen> {
                     height: 40,
                     decoration: BoxDecoration(
                       color: const Color(0xFF4B7BF5),
-                      borderRadius: BorderRadius.circular(12),
+                      borderRadius: BorderRadius.circular(24),
                     ),
                     child: const Icon(
                       Icons.qr_code_scanner_outlined,
                       color: Colors.white,
-                      size: 18,
+                      size: 26,
                     ),
                   ),
                 ],
