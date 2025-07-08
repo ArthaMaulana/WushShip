@@ -31,7 +31,7 @@ class CustomBottomNavBar extends StatelessWidget {
         children: [
           _buildNavItem(0, Icons.home_outlined, Icons.home, 'Utama'),
           _buildNavItem(1, Icons.local_shipping_outlined, Icons.local_shipping, ''),
-          _buildNavItem(2, Icons.diamond_outlined, Icons.diamond, ''),
+          _buildNavItem(2, Icons.chat_bubble_outline, Icons.chat_bubble, 'Chat'),
           _buildNavItem(3, Icons.settings_outlined, Icons.settings, ''),
         ],
       ),

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 import '../widgets/bottom_nav_bar.dart';
+import 'courier_chat_screen.dart';
 
 class CourierDashboardScreen extends StatefulWidget {
   const CourierDashboardScreen({super.key});
@@ -216,6 +217,17 @@ class _CourierDashboardScreenState extends State<CourierDashboardScreen> {
           setState(() {
             _currentIndex = index;
           });
+
+          // Navigate to different screens based on bottom nav selection
+          if (index == 2) {
+            // Chat icon
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => const CourierChatScreen(),
+              ),
+            );
+          }
         },
       ),
     );
@@ -354,48 +366,88 @@ class _CourierDashboardScreenState extends State<CourierDashboardScreen> {
   }
 
   Widget _buildActionButtons() {
-    return Row(
-      children: [
-        Expanded(
-          child: Container(
-            padding: const EdgeInsets.symmetric(vertical: 16),
-            decoration: BoxDecoration(
-              color: const Color(0xFF4B7BF5),
-              borderRadius: BorderRadius.circular(25),
-            ),
-            child: const Center(
-              child: Text(
-                'Akan Datang',
-                style: TextStyle(
-                  color: Colors.white,
-                  fontSize: 16,
-                  fontWeight: FontWeight.w600,
+    return Container(
+      padding: const EdgeInsets.all(8),
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(32),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withOpacity(0.05),
+            blurRadius: 10,
+            offset: const Offset(0, 2),
+          ),
+        ],
+      ),
+      child: Row(
+        children: [
+          Expanded(
+            child: GestureDetector(
+              onTap: () {
+                // Navigate to Akan Datang screen
+                ScaffoldMessenger.of(context).showSnackBar(
+                  const SnackBar(
+                    content: Text('Navigating to Akan Datang...'),
+                    duration: Duration(seconds: 1),
+                  ),
+                );
+                // TODO: Add navigation to Akan Datang screen
+                // Navigator.push(context, MaterialPageRoute(builder: (context) => AkanDatangScreen()));
+              },
+              child: Container(
+                padding: const EdgeInsets.symmetric(vertical: 14),
+                decoration: BoxDecoration(
+                  color: const Color(0xFF4B7BF5),
+                  borderRadius: BorderRadius.circular(25),
+                ),
+                child: const Center(
+                  child: Text(
+                    'Akan Datang',
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 16,
+                      fontWeight: FontWeight.w600,
+                    ),
+                  ),
                 ),
               ),
             ),
           ),
-        ),
-        const SizedBox(width: 16),
-        Expanded(
-          child: Container(
-            padding: const EdgeInsets.symmetric(vertical: 16),
-            decoration: BoxDecoration(
-              color: Colors.transparent,
-              borderRadius: BorderRadius.circular(25),
-            ),
-            child: const Center(
-              child: Text(
-                'List Paket',
-                style: TextStyle(
-                  color: Color(0xFF4B7BF5),
-                  fontSize: 16,
-                  fontWeight: FontWeight.w600,
+          const SizedBox(width: 16),
+          Expanded(
+            child: GestureDetector(
+              onTap: () {
+                // Navigate to List Paket screen
+                ScaffoldMessenger.of(context).showSnackBar(
+                  const SnackBar(
+                    content: Text('Navigating to List Paket...'),
+                    duration: Duration(seconds: 1),
+                  ),
+                );
+                // TODO: Add navigation to List Paket screen
+                // Navigator.push(context, MaterialPageRoute(builder: (context) => ListPaketScreen()));
+              },
+              child: Container(
+                padding: const EdgeInsets.symmetric(vertical: 16),
+                decoration: BoxDecoration(
+                  color: Colors.transparent,
+                  borderRadius: BorderRadius.circular(25),
+                ),
+                child: const Center(
+                  child: Text(
+                    'List Paket',
+                    style: TextStyle(
+                      color: Color(0xFF4B7BF5),
+                      fontSize: 16,
+                      fontWeight: FontWeight.w600,
+                    ),
+                  ),
                 ),
               ),
             ),
           ),
-        ),
-      ],
+        ],
+      ),
     );
   }
 
@@ -534,67 +586,80 @@ class _CourierDashboardScreenState extends State<CourierDashboardScreen> {
     required Color statusColor,
     required Color avatarColor,
   }) {
-    return Container(
-      padding: const EdgeInsets.all(16),
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(12),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.black.withOpacity(0.05),
-            blurRadius: 8,
-            offset: const Offset(0, 2),
+    return GestureDetector(
+      onTap: () {
+        // Show courier details or navigate to courier detail screen
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text('Selected courier: $name'),
+            duration: const Duration(seconds: 1),
           ),
-        ],
-      ),
-      child: Row(
-        children: [
-          Container(
-            width: 50,
-            height: 50,
-            decoration: BoxDecoration(
-              color: avatarColor,
-              shape: BoxShape.circle,
+        );
+        // TODO: Add navigation to courier detail screen
+        // Navigator.push(context, MaterialPageRoute(builder: (context) => CourierDetailScreen(courierName: name)));
+      },
+      child: Container(
+        padding: const EdgeInsets.all(16),
+        decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.circular(12),
+          boxShadow: [
+            BoxShadow(
+              color: Colors.black.withOpacity(0.05),
+              blurRadius: 8,
+              offset: const Offset(0, 2),
             ),
-            child: const Icon(
-              Icons.person,
-              color: Colors.white,
-              size: 24,
+          ],
+        ),
+        child: Row(
+          children: [
+            Container(
+              width: 50,
+              height: 50,
+              decoration: BoxDecoration(
+                color: avatarColor,
+                shape: BoxShape.circle,
+              ),
+              child: const Icon(
+                Icons.person,
+                color: Colors.white,
+                size: 24,
+              ),
             ),
-          ),
-          const SizedBox(width: 16),
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  name,
-                  style: const TextStyle(
-                    fontSize: 16,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.black,
+            const SizedBox(width: 16),
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    name,
+                    style: const TextStyle(
+                      fontSize: 16,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.black,
+                    ),
                   ),
-                ),
-                const SizedBox(height: 4),
-                Text(
-                  address,
-                  style: const TextStyle(
-                    fontSize: 14,
-                    color: Colors.grey,
+                  const SizedBox(height: 4),
+                  Text(
+                    address,
+                    style: const TextStyle(
+                      fontSize: 14,
+                      color: Colors.grey,
+                    ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
-          ),
-          Text(
-            status,
-            style: TextStyle(
-              fontSize: 14,
-              fontWeight: FontWeight.w600,
-              color: statusColor,
+            Text(
+              status,
+              style: TextStyle(
+                fontSize: 14,
+                fontWeight: FontWeight.w600,
+                color: statusColor,
+              ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }
