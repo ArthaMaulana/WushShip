@@ -99,7 +99,7 @@ class _ShippingScreenState extends State<ShippingScreen> {
                     'Contoh : +6289876543210'),
                 const SizedBox(height: 16),
                 _buildLocationField('Area Penjemputan',
-                    'Kelurahan , Kecamatan , Kabupaten , Provinis , Negara'),
+                    'Kelurahan, Kecamatan, Kabupaten, Provinsi, Negara'),
                 const SizedBox(height: 16),
                 _buildLocationField(
                     'Pilih Lokasi', 'Pilih Lokasi Spesifik Anda'),
