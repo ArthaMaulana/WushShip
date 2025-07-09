@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import '../models/order_model.dart';
+
+import '../../models/order_model.dart';
 
 class OrderDetailSheet extends StatelessWidget {
   final OrderItem order;
@@ -162,8 +163,8 @@ class OrderDetailSheet extends StatelessWidget {
             height: 12,
             margin: const EdgeInsets.only(top: 4),
             decoration: BoxDecoration(
-              color: history.isCompleted 
-                  ? const Color(0xFF00C896) 
+              color: history.isCompleted
+                  ? const Color(0xFF00C896)
                   : const Color(0xFF8F9BB3),
               shape: BoxShape.circle,
             ),
@@ -178,8 +179,8 @@ class OrderDetailSheet extends StatelessWidget {
                   style: TextStyle(
                     fontSize: 14,
                     fontWeight: FontWeight.w600,
-                    color: history.isCompleted 
-                        ? const Color(0xFF2D3142) 
+                    color: history.isCompleted
+                        ? const Color(0xFF2D3142)
                         : const Color(0xFF8F9BB3),
                   ),
                 ),

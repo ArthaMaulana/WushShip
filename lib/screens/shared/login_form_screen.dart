@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:provider/provider.dart';
 
-import 'home_screen.dart';
+import '../../auth/mock_auth_service.dart';
+import '../user/home_screen.dart';
 import 'register_screen.dart';
 
 class LoginFormScreen extends StatefulWidget {
@@ -15,6 +17,7 @@ class _LoginFormScreenState extends State<LoginFormScreen> {
   final TextEditingController _usernameController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
   bool _obscurePassword = true;
+  bool _isLoading = false;
 
   @override
   void dispose() {
@@ -96,8 +99,8 @@ class _LoginFormScreenState extends State<LoginFormScreen> {
                     // Username field
                     _buildTextField(
                       controller: _usernameController,
-                      hintText: 'Nama Pengguna',
-                      icon: Icons.person_outline,
+                      hintText: 'Email',
+                      icon: Icons.email_outlined,
                     ),
 
                     const SizedBox(height: 16),
@@ -143,9 +146,7 @@ class _LoginFormScreenState extends State<LoginFormScreen> {
                       width: double.infinity,
                       height: 55,
                       child: ElevatedButton(
-                        onPressed: () {
-                          _handleLogin();
-                        },
+                        onPressed: _isLoading ? null : _handleLogin,
                         style: ElevatedButton.styleFrom(
                           backgroundColor: const Color(0xFF3B5FE8),
                           shape: RoundedRectangleBorder(
@@ -153,14 +154,23 @@ class _LoginFormScreenState extends State<LoginFormScreen> {
                           ),
                           elevation: 0,
                         ),
-                        child: const Text(
-                          'Masuk',
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 18,
-                            fontWeight: FontWeight.w600,
-                          ),
-                        ),
+                        child: _isLoading
+                            ? const SizedBox(
+                                height: 20,
+                                width: 20,
+                                child: CircularProgressIndicator(
+                                  color: Colors.white,
+                                  strokeWidth: 2,
+                                ),
+                              )
+                            : const Text(
+                                'Masuk',
+                                style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 18,
+                                  fontWeight: FontWeight.w600,
+                                ),
+                              ),
                       ),
                     ),
 
@@ -179,11 +189,7 @@ class _LoginFormScreenState extends State<LoginFormScreen> {
                         ),
                         GestureDetector(
                           onTap: () {
-                            Navigator.of(context).push(
-                              MaterialPageRoute(
-                                builder: (_) => const RegisterScreen(),
-                              ),
-                            );
+                            _navigateToRegister();
                           },
                           child: const Text(
                             'Daftar',
@@ -267,29 +273,107 @@ class _LoginFormScreenState extends State<LoginFormScreen> {
     );
   }
 
-  void _handleLogin() {
+  Future<void> _handleLogin() async {
     // Validate input
     if (_usernameController.text.isEmpty || _passwordController.text.isEmpty) {
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(
-          content: Text('Harap isi nama pengguna dan kata sandi'),
+          content: Text('Harap isi email dan kata sandi'),
           backgroundColor: Colors.red,
         ),
       );
       return;
     }
 
-    // Show success message
-    ScaffoldMessenger.of(context).showSnackBar(
-      const SnackBar(
-        content: Text('Login berhasil!'),
-        backgroundColor: Colors.green,
-      ),
-    );
+    // Basic email validation
+    if (!_usernameController.text.contains('@')) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text('Format email tidak valid'),
+          backgroundColor: Colors.red,
+        ),
+      );
+      return;
+    }
 
-    // Navigate to home screen
-    Navigator.of(context).pushReplacement(
-      MaterialPageRoute(builder: (_) => const HomeScreen()),
-    );
+    setState(() {
+      _isLoading = true;
+    });
+
+    try {
+      final authService = Provider.of<AuthService>(context, listen: false);
+      final success = await authService.signIn(
+        email: _usernameController.text.trim(),
+        password: _passwordController.text,
+      );
+
+      if (success) {
+        // Show success message
+        if (mounted) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(
+              content: Text('Login berhasil!'),
+              backgroundColor: Colors.green,
+            ),
+          );
+        }
+
+        // Navigate to home screen
+        _navigateToHome();
+      } else {
+        if (mounted) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(
+              content: Text('Login gagal. Periksa email dan kata sandi Anda.'),
+              backgroundColor: Colors.red,
+            ),
+          );
+        }
+      }
+    } catch (e) {
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text('Error: $e'),
+            backgroundColor: Colors.red,
+          ),
+        );
+      }
+    } finally {
+      if (mounted) {
+        setState(() {
+          _isLoading = false;
+        });
+      }
+    }
+  }
+
+  void _navigateToHome() {
+    if (!mounted) return;
+
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (mounted) {
+        try {
+          Navigator.pushReplacement(
+            context,
+            MaterialPageRoute(builder: (_) => const HomeScreen()),
+          );
+        } catch (e) {
+          debugPrint('Navigation error: $e');
+        }
+      }
+    });
+  }
+
+  void _navigateToRegister() {
+    if (!mounted) return;
+
+    try {
+      Navigator.of(context).push(
+        MaterialPageRoute(builder: (_) => const RegisterScreen()),
+      );
+    } catch (e) {
+      debugPrint('Navigation error: $e');
+    }
   }
 }

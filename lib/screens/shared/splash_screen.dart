@@ -2,7 +2,8 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:wuship_project/screens/onboarding_screen.dart';
+
+import 'onboarding_screen.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
@@ -17,10 +18,16 @@ class _SplashScreenState extends State<SplashScreen> {
     super.initState();
     // Navigate to onboarding screen after 3 seconds
     Timer(const Duration(seconds: 2), () {
+      _navigateToOnboarding();
+    });
+  }
+
+  void _navigateToOnboarding() {
+    if (mounted) {
       Navigator.of(context).pushReplacement(
         MaterialPageRoute(builder: (_) => const OnboardingScreen()),
       );
-    });
+    }
   }
 
   @override
@@ -126,8 +133,7 @@ class TopWavePainter extends CustomPainter {
   @override
   void paint(Canvas canvas, Size size) {
     final paint = Paint()
-      ..color =
-          const Color(0xFF4B6FF8) // Lighter blue for the wave
+      ..color = const Color(0xFF4B6FF8) // Lighter blue for the wave
       ..style = PaintingStyle.fill;
 
     final path = Path();
@@ -160,8 +166,7 @@ class BottomWavePainter extends CustomPainter {
   @override
   void paint(Canvas canvas, Size size) {
     final paint = Paint()
-      ..color =
-          const Color(0xFF4B6FF8) // Lighter blue for the wave
+      ..color = const Color(0xFF4B6FF8) // Lighter blue for the wave
       ..style = PaintingStyle.fill;
 
     final path = Path();

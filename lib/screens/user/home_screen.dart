@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:wuship_project/screens/shipping_screen.dart';
+import 'package:wuship_project/screens/user/shipping_screen.dart';
 
-import '../widgets/bottom_nav_bar.dart';
+import '../../widgets/user/user_bottom_nav_bar.dart';
 import 'chat_screen.dart';
 import 'check_price_screen.dart';
 import 'notification_screen.dart';
@@ -234,7 +234,7 @@ class _HomeScreenState extends State<HomeScreen> {
           ),
         ],
       ),
-      bottomNavigationBar: CustomBottomNavBar(
+      bottomNavigationBar: UserBottomNavBar(
         currentIndex: _currentIndex,
         onTap: (index) {
           setState(() {

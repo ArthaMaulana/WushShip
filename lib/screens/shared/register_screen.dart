@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:provider/provider.dart';
 
-import 'home_screen.dart';
+import '../../auth/auth_models.dart';
+import '../../auth/mock_auth_service.dart';
+import '../user/home_screen.dart';
 import 'login_form_screen.dart';
 
 class RegisterScreen extends StatefulWidget {
@@ -17,6 +20,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
   final TextEditingController _passwordController = TextEditingController();
   final TextEditingController _phoneController = TextEditingController();
   bool _obscurePassword = true;
+  bool _isLoading = false;
 
   @override
   void dispose() {
@@ -142,9 +146,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       width: double.infinity,
                       height: 55,
                       child: ElevatedButton(
-                        onPressed: () {
-                          _handleRegister();
-                        },
+                        onPressed: _isLoading ? null : _handleRegister,
                         style: ElevatedButton.styleFrom(
                           backgroundColor: const Color(0xFF3B5FE8),
                           shape: RoundedRectangleBorder(
@@ -152,14 +154,23 @@ class _RegisterScreenState extends State<RegisterScreen> {
                           ),
                           elevation: 0,
                         ),
-                        child: const Text(
-                          'Buat Akun',
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 18,
-                            fontWeight: FontWeight.w600,
-                          ),
-                        ),
+                        child: _isLoading
+                            ? const SizedBox(
+                                height: 20,
+                                width: 20,
+                                child: CircularProgressIndicator(
+                                  color: Colors.white,
+                                  strokeWidth: 2,
+                                ),
+                              )
+                            : const Text(
+                                'Buat Akun',
+                                style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 18,
+                                  fontWeight: FontWeight.w600,
+                                ),
+                              ),
                       ),
                     ),
 
@@ -178,11 +189,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         ),
                         GestureDetector(
                           onTap: () {
-                            Navigator.of(context).pushReplacement(
-                              MaterialPageRoute(
-                                builder: (_) => const LoginFormScreen(),
-                              ),
-                            );
+                            _navigateToLogin();
                           },
                           child: const Text(
                             'Masuk',
@@ -266,7 +273,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
     );
   }
 
-  void _handleRegister() {
+  Future<void> _handleRegister() async {
     // Validate input
     if (_nameController.text.isEmpty ||
         _emailController.text.isEmpty ||
@@ -303,17 +310,87 @@ class _RegisterScreenState extends State<RegisterScreen> {
       return;
     }
 
-    // Show success message
-    ScaffoldMessenger.of(context).showSnackBar(
-      const SnackBar(
-        content: Text('Registrasi berhasil!'),
-        backgroundColor: Colors.green,
-      ),
-    );
+    setState(() {
+      _isLoading = true;
+    });
 
-    // Navigate to home screen
-    Navigator.of(context).pushReplacement(
-      MaterialPageRoute(builder: (_) => const HomeScreen()),
-    );
+    try {
+      final authService = Provider.of<AuthService>(context, listen: false);
+      final success = await authService.signUp(
+        email: _emailController.text.trim(),
+        password: _passwordController.text,
+        fullName: _nameController.text.trim(),
+        phone: _phoneController.text.trim(),
+        role: UserRole.user,
+      );
+
+      if (success) {
+        // Show success message
+        if (mounted) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(
+              content: Text('Registrasi berhasil!'),
+              backgroundColor: Colors.green,
+            ),
+          );
+        }
+
+        // Navigate to home screen
+        _navigateToHome();
+      } else {
+        if (mounted) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(
+              content: Text('Registrasi gagal. Silakan coba lagi.'),
+              backgroundColor: Colors.red,
+            ),
+          );
+        }
+      }
+    } catch (e) {
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text('Error: $e'),
+            backgroundColor: Colors.red,
+          ),
+        );
+      }
+    } finally {
+      if (mounted) {
+        setState(() {
+          _isLoading = false;
+        });
+      }
+    }
+  }
+
+  void _navigateToHome() {
+    if (!mounted) return;
+
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (mounted) {
+        try {
+          Navigator.pushReplacement(
+            context,
+            MaterialPageRoute(builder: (_) => const HomeScreen()),
+          );
+        } catch (e) {
+          debugPrint('Navigation error: $e');
+        }
+      }
+    });
+  }
+
+  void _navigateToLogin() {
+    if (!mounted) return;
+
+    try {
+      Navigator.of(context).pushReplacement(
+        MaterialPageRoute(builder: (_) => const LoginFormScreen()),
+      );
+    } catch (e) {
+      debugPrint('Navigation error: $e');
+    }
   }
 }

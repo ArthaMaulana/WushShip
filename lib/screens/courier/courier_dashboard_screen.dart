@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
-import '../widgets/bottom_nav_bar.dart';
+import '../../widgets/courier/courier_bottom_nav_bar.dart';
 import 'courier_chat_screen.dart';
 
 class CourierDashboardScreen extends StatefulWidget {
@@ -211,7 +211,7 @@ class _CourierDashboardScreenState extends State<CourierDashboardScreen> {
           ),
         ],
       ),
-      bottomNavigationBar: CustomBottomNavBar(
+      bottomNavigationBar: CourierBottomNavBar(
         currentIndex: _currentIndex,
         onTap: (index) {
           setState(() {

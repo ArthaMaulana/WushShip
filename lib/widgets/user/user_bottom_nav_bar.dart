@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 
-class CustomBottomNavBar extends StatelessWidget {
+class UserBottomNavBar extends StatelessWidget {
   final int currentIndex;
   final Function(int) onTap;
 
-  const CustomBottomNavBar({
+  const UserBottomNavBar({
     super.key,
     required this.currentIndex,
     required this.onTap,
@@ -30,17 +30,19 @@ class CustomBottomNavBar extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [
           _buildNavItem(0, Icons.home_outlined, Icons.home, 'Utama'),
-          _buildNavItem(1, Icons.local_shipping_outlined, Icons.local_shipping, ''),
-          _buildNavItem(2, Icons.chat_bubble_outline, Icons.chat_bubble, 'Chat'),
+          _buildNavItem(
+              1, Icons.local_shipping_outlined, Icons.local_shipping, ''),
+          _buildNavItem(2, Icons.diamond_outlined, Icons.diamond, ''),
           _buildNavItem(3, Icons.settings_outlined, Icons.settings, ''),
         ],
       ),
     );
   }
 
-  Widget _buildNavItem(int index, IconData outlinedIcon, IconData filledIcon, String label) {
+  Widget _buildNavItem(
+      int index, IconData outlinedIcon, IconData filledIcon, String label) {
     final isSelected = index == currentIndex;
-    
+
     return GestureDetector(
       onTap: () => onTap(index),
       child: AnimatedContainer(
