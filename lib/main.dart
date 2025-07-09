@@ -7,12 +7,12 @@ import 'auth/auth_models.dart';
 import 'auth/mock_auth_service.dart';
 // import 'auth/supabase_config.dart';
 import 'providers/app_providers.dart';
-import 'screens/auth/courier_login_screen.dart';
-import 'screens/auth/role_selection_screen.dart';
-import 'screens/auth/user_login_screen.dart';
 import 'screens/courier/courier_dashboard_screen.dart';
 import 'screens/shared/splash_screen.dart';
 import 'screens/user/home_screen.dart';
+import 'screens/user/my_order_screen.dart';
+import 'screens/user/premium_screen.dart';
+import 'screens/user/profile_screen.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -54,11 +54,10 @@ class MyApp extends StatelessWidget {
       ),
       home: const AuthWrapper(),
       routes: {
-        '/role-selection': (context) => const RoleSelectionScreen(),
-        '/user-login': (context) => const UserLoginScreen(),
-        '/courier-login': (context) => const CourierLoginScreen(),
         '/user-home': (context) => const HomeScreen(),
-        '/courier-dashboard': (context) => const CourierDashboardScreen(),
+        '/my-orders': (context) => const MyOrderScreen(),
+        '/premium': (context) => const PremiumScreen(),
+        '/profile': (context) => const ProfileScreen(),
       },
     );
   }

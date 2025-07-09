@@ -289,10 +289,20 @@ class _CourierDashboardScreenState extends State<CourierDashboardScreen> {
               color: Colors.white.withOpacity(0.1),
               borderRadius: BorderRadius.circular(40),
             ),
-            child: const Icon(
-              Icons.delivery_dining,
-              color: Colors.white,
-              size: 40,
+            child: ClipOval(
+              child: Image.asset(
+                'assets/images/Logo.png',
+                fit: BoxFit.contain,
+                width: 50,
+                height: 50,
+                errorBuilder: (context, error, stackTrace) {
+                  return const Icon(
+                    Icons.delivery_dining,
+                    color: Colors.white,
+                    size: 40,
+                  );
+                },
+              ),
             ),
           ),
         ],

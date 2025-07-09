@@ -3,7 +3,6 @@ import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 
 import '../../auth/mock_auth_service.dart';
-import '../user/home_screen.dart';
 import 'register_screen.dart';
 
 class LoginFormScreen extends StatefulWidget {
@@ -354,10 +353,7 @@ class _LoginFormScreenState extends State<LoginFormScreen> {
     WidgetsBinding.instance.addPostFrameCallback((_) {
       if (mounted) {
         try {
-          Navigator.pushReplacement(
-            context,
-            MaterialPageRoute(builder: (_) => const HomeScreen()),
-          );
+          Navigator.pushReplacementNamed(context, '/user-home');
         } catch (e) {
           debugPrint('Navigation error: $e');
         }

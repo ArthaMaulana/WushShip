@@ -28,7 +28,6 @@ class _CourierLoginScreenState extends State<CourierLoginScreen> {
 
   @override
   Widget build(BuildContext context) {
-    // Set status bar to light (dark icons)
     SystemChrome.setSystemUIOverlayStyle(
       const SystemUiOverlayStyle(
         statusBarColor: Colors.transparent,
@@ -48,57 +47,13 @@ class _CourierLoginScreenState extends State<CourierLoginScreen> {
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        // Use a courier-related image or modify the existing one
+                        // Use a delivery-themed illustration or icon
                         Container(
-                          width: 500,
-                          height: 467,
-                          decoration: const BoxDecoration(
-                            gradient: LinearGradient(
-                              begin: Alignment.topCenter,
-                              end: Alignment.bottomCenter,
-                              colors: [
-                                Color(
-                                    0xFFFF8C00), // Orange gradient for courier
-                                Color(0xFFFF6B00),
-                              ],
-                            ),
-                          ),
-                          child: Center(
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Container(
-                                  width: 120,
-                                  height: 120,
-                                  decoration: BoxDecoration(
-                                    color: Colors.white.withOpacity(0.2),
-                                    shape: BoxShape.circle,
-                                  ),
-                                  child: const Icon(
-                                    Icons.delivery_dining,
-                                    size: 60,
-                                    color: Colors.white,
-                                  ),
-                                ),
-                                const SizedBox(height: 20),
-                                const Text(
-                                  'Kurir WushShip',
-                                  style: TextStyle(
-                                    fontSize: 24,
-                                    fontWeight: FontWeight.bold,
-                                    color: Colors.white,
-                                  ),
-                                ),
-                                const SizedBox(height: 8),
-                                const Text(
-                                  'Mulai bekerja dan dapatkan penghasilan',
-                                  style: TextStyle(
-                                    fontSize: 16,
-                                    color: Colors.white,
-                                  ),
-                                ),
-                              ],
-                            ),
+                          child: Image.asset(
+                            'assets/images/Login_Screen2.png', // Reuse the same image
+                            width: 500,
+                            height: 467,
+                            fit: BoxFit.cover,
                           ),
                         ),
                       ],
@@ -110,11 +65,7 @@ class _CourierLoginScreenState extends State<CourierLoginScreen> {
                     left: 20,
                     child: IconButton(
                       onPressed: () => Navigator.pop(context),
-                      icon: const Icon(
-                        Icons.arrow_back,
-                        color: Colors.white,
-                        size: 24,
-                      ),
+                      icon: const Icon(Icons.arrow_back, color: Colors.black),
                     ),
                   ),
                 ],
@@ -131,13 +82,13 @@ class _CourierLoginScreenState extends State<CourierLoginScreen> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                    // Title
+                    // Title with orange color for courier theme
                     const Text(
                       'Masuk Kurir',
                       style: TextStyle(
                         fontSize: 36,
                         fontWeight: FontWeight.bold,
-                        color: Color(0xFFFF8C00),
+                        color: Color(0xFFFF8C00), // Orange color for courier
                       ),
                     ),
 
@@ -145,7 +96,7 @@ class _CourierLoginScreenState extends State<CourierLoginScreen> {
 
                     // Subtitle
                     const Text(
-                      'Masuk sebagai kurir untuk mulai\nbekerja dan mendapatkan penghasilan',
+                      'Mulai bekerja dan dapatkan\npenghasilan',
                       textAlign: TextAlign.center,
                       style: TextStyle(
                         fontSize: 16,
@@ -184,7 +135,7 @@ class _CourierLoginScreenState extends State<CourierLoginScreen> {
                           _showRegisterInfo();
                         },
                         child: const Text(
-                          'Belum punya akun?',
+                          'Belum punya akun kurir?',
                           style: TextStyle(
                             color: Color(0xFFFF8C00),
                             fontSize: 14,
@@ -196,14 +147,15 @@ class _CourierLoginScreenState extends State<CourierLoginScreen> {
 
                     const SizedBox(height: 30),
 
-                    // Login button
+                    // Login button with orange theme
                     SizedBox(
                       width: double.infinity,
                       height: 55,
                       child: ElevatedButton(
                         onPressed: _isLoading ? null : _handleLogin,
                         style: ElevatedButton.styleFrom(
-                          backgroundColor: const Color(0xFFFF8C00),
+                          backgroundColor:
+                              const Color(0xFFFF8C00), // Orange for courier
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(27.5),
                           ),
@@ -231,12 +183,12 @@ class _CourierLoginScreenState extends State<CourierLoginScreen> {
 
                     const SizedBox(height: 14),
 
-                    // Register info
+                    // Info text
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         const Text(
-                          'Belum punya akun kurir? ',
+                          'Butuh bantuan? ',
                           style: TextStyle(
                             color: Color(0xFF9E9E9E),
                             fontSize: 16,
@@ -244,7 +196,7 @@ class _CourierLoginScreenState extends State<CourierLoginScreen> {
                         ),
                         GestureDetector(
                           onTap: () {
-                            _showRegisterInfo();
+                            _showHelpInfo();
                           },
                           child: const Text(
                             'Hubungi Admin',
@@ -358,8 +310,7 @@ class _CourierLoginScreenState extends State<CourierLoginScreen> {
     try {
       final authService = Provider.of<AuthService>(context, listen: false);
 
-      // For courier login, we need to either sign up or sign in
-      // First try to sign in, if fails, create a new courier account
+      // For courier login, try to sign in first, if fails create new account
       bool success = await authService.signIn(
         email: _emailController.text.trim(),
         password: _passwordController.text,
@@ -442,18 +393,37 @@ class _CourierLoginScreenState extends State<CourierLoginScreen> {
         return AlertDialog(
           title: const Text('Daftar sebagai Kurir'),
           content: const Text(
-            'Untuk mendaftar sebagai kurir, silakan hubungi admin melalui:\n\n'
-            'Email: admin@wushship.com\n'
-            'WhatsApp: +62 812-3456-7890\n\n'
-            'Atau gunakan email dan password apapun untuk demo.',
+            'Untuk demo, gunakan email dan password apapun untuk login.\n\n'
+            'Sistem akan otomatis membuat akun kurir untuk Anda.\n\n'
+            'Contoh:\nEmail: kurir@test.com\nPassword: 123456',
           ),
           actions: [
             TextButton(
               onPressed: () => Navigator.pop(context),
-              child: const Text(
-                'OK',
-                style: TextStyle(color: Color(0xFFFF8C00)),
-              ),
+              child: const Text('OK'),
+            ),
+          ],
+        );
+      },
+    );
+  }
+
+  void _showHelpInfo() {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: const Text('Bantuan'),
+          content: const Text(
+            'Jika Anda mengalami masalah dengan login kurir, silakan hubungi:\n\n'
+            'Email: admin@wushship.com\n'
+            'WhatsApp: +62 812-3456-7890\n\n'
+            'Jam operasional: 08:00 - 17:00 WIB',
+          ),
+          actions: [
+            TextButton(
+              onPressed: () => Navigator.pop(context),
+              child: const Text('OK'),
             ),
           ],
         );

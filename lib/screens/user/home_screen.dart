@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:wuship_project/screens/user/my_order_screen.dart';
+import 'package:wuship_project/screens/user/premium_screen.dart';
+import 'package:wuship_project/screens/user/profile_screen.dart';
 import 'package:wuship_project/screens/user/shipping_screen.dart';
 
 import '../../widgets/user/user_bottom_nav_bar.dart';
 import 'chat_screen.dart';
 import 'check_price_screen.dart';
 import 'notification_screen.dart';
-import 'profile_screen.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -16,8 +18,6 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  int _currentIndex = 0;
-
   @override
   Widget build(BuildContext context) {
     SystemChrome.setSystemUIOverlayStyle(
@@ -235,22 +235,35 @@ class _HomeScreenState extends State<HomeScreen> {
         ],
       ),
       bottomNavigationBar: UserBottomNavBar(
-        currentIndex: _currentIndex,
+        currentIndex: 0, // HomeScreen is at index 0
         onTap: (index) {
-          setState(() {
-            _currentIndex = index;
-          });
-
           // Navigate to different screens based on bottom nav selection
-          if (index == 3) {
-            // Settings/Profile icon
-            Navigator.push(
+          if (index == 1) {
+            // My Orders
+            Navigator.pushReplacement(
+              context,
+              MaterialPageRoute(
+                builder: (context) => const MyOrderScreen(),
+              ),
+            );
+          } else if (index == 2) {
+            // Premium
+            Navigator.pushReplacement(
+              context,
+              MaterialPageRoute(
+                builder: (context) => const PremiumScreen(),
+              ),
+            );
+          } else if (index == 3) {
+            // Profile
+            Navigator.pushReplacement(
               context,
               MaterialPageRoute(
                 builder: (context) => const ProfileScreen(),
               ),
             );
           }
+          // index == 0 (Home) - stay on current screen
         },
       ),
     );
