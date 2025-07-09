@@ -34,7 +34,7 @@ class CourierBottomNavBar extends StatelessWidget {
               1, Icons.local_shipping_outlined, Icons.local_shipping, ''),
           _buildNavItem(
               2, Icons.chat_bubble_outline, Icons.chat_bubble, 'Chat'),
-          _buildNavItem(3, Icons.settings_outlined, Icons.settings, ''),
+          _buildNavItem(3, Icons.person_outline, Icons.person, 'Profile'),
         ],
       ),
     );

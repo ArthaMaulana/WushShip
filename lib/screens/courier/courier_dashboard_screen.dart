@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 
 import '../../widgets/courier/courier_bottom_nav_bar.dart';
 import 'courier_chat_screen.dart';
+import 'courier_profile_screen.dart';
 
 class CourierDashboardScreen extends StatefulWidget {
   const CourierDashboardScreen({super.key});
@@ -78,8 +79,6 @@ class _CourierDashboardScreenState extends State<CourierDashboardScreen> {
                             ),
                             Row(
                               children: [
-                                _buildHeaderIcon(Icons.headset_mic_outlined),
-                                const SizedBox(width: 12),
                                 _buildHeaderIcon(Icons.notifications_outlined),
                               ],
                             ),
@@ -91,20 +90,20 @@ class _CourierDashboardScreenState extends State<CourierDashboardScreen> {
                         const Column(
                           children: [
                             Text(
-                              'Dashboard Kurir',
+                              'Lacak kirimanmu pantau setiap langkahnya',
                               style: TextStyle(
                                 color: Colors.white,
-                                fontSize: 24,
+                                fontSize: 16,
                                 fontWeight: FontWeight.bold,
                               ),
                               textAlign: TextAlign.center,
                             ),
                             SizedBox(height: 8),
                             Text(
-                              'Kelola pengiriman dan lacak status barang',
+                              'selalu tahu di mana barang berada',
                               style: TextStyle(
                                 color: Colors.white70,
-                                fontSize: 14,
+                                fontSize: 15,
                                 fontWeight: FontWeight.w400,
                               ),
                               textAlign: TextAlign.center,
@@ -129,7 +128,7 @@ class _CourierDashboardScreenState extends State<CourierDashboardScreen> {
                       // Courier Statistics Banner
                       _buildCourierStatsBanner(),
 
-                      const SizedBox(height: 24),
+                      const SizedBox(height: 12),
 
                       // Detailed Statistics
                       _buildDetailedStatistics(),
@@ -183,7 +182,7 @@ class _CourierDashboardScreenState extends State<CourierDashboardScreen> {
                   const Expanded(
                     child: TextField(
                       decoration: InputDecoration(
-                        hintText: 'Cari Paket Pengiriman',
+                        hintText: 'Masukkan Nomor Pelacakan ',
                         border: InputBorder.none,
                         hintStyle: TextStyle(
                           color: Color(0xFF8F9BB3),
@@ -227,6 +226,14 @@ class _CourierDashboardScreenState extends State<CourierDashboardScreen> {
                 builder: (context) => const CourierChatScreen(),
               ),
             );
+          } else if (index == 3) {
+            // Profile icon
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => const CourierProfileScreen(),
+              ),
+            );
           }
         },
       ),
@@ -234,78 +241,16 @@ class _CourierDashboardScreenState extends State<CourierDashboardScreen> {
   }
 
   Widget _buildCourierStatsBanner() {
-    return Container(
+    return SizedBox(
       width: double.infinity,
-      padding: const EdgeInsets.all(20),
-      decoration: BoxDecoration(
-        gradient: const LinearGradient(
-          begin: Alignment.topLeft,
-          end: Alignment.bottomRight,
-          colors: [
-            Color(0xFF4B7BF5),
-            Color(0xFF3B5FE8),
-          ],
-        ),
+      height: 200,
+      child: ClipRRect(
         borderRadius: BorderRadius.circular(16),
-      ),
-      child: Row(
-        children: [
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                const Text(
-                  'Paket Aktif',
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 16,
-                    fontWeight: FontWeight.w500,
-                  ),
-                ),
-                const Text(
-                  '12 Pengiriman',
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 24,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-                const SizedBox(height: 8),
-                const Text(
-                  'Status hari ini',
-                  style: TextStyle(
-                    color: Colors.white70,
-                    fontSize: 14,
-                  ),
-                ),
-              ],
-            ),
-          ),
-          // Delivery illustration
-          Container(
-            width: 80,
-            height: 80,
-            decoration: BoxDecoration(
-              color: Colors.white.withOpacity(0.1),
-              borderRadius: BorderRadius.circular(40),
-            ),
-            child: ClipOval(
-              child: Image.asset(
-                'assets/images/Logo.png',
-                fit: BoxFit.contain,
-                width: 50,
-                height: 50,
-                errorBuilder: (context, error, stackTrace) {
-                  return const Icon(
-                    Icons.delivery_dining,
-                    color: Colors.white,
-                    size: 40,
-                  );
-                },
-              ),
-            ),
-          ),
-        ],
+        child: Image.asset(
+          'assets/images/Banner.png',
+          fit: BoxFit.cover,
+          width: double.infinity,
+        ),
       ),
     );
   }
@@ -327,21 +272,19 @@ class _CourierDashboardScreenState extends State<CourierDashboardScreen> {
           children: [
             Expanded(
               child: _buildStatCard(
-                icon: Icons.inventory_2_outlined,
-                iconColor: const Color(0xFF4B7BF5),
                 title: 'Paket Aktif',
                 count: '12',
                 countColor: const Color(0xFF4B7BF5),
+                iconAsset: 'assets/images/Paket.png',
               ),
             ),
             const SizedBox(width: 16),
             Expanded(
               child: _buildStatCard(
-                icon: Icons.schedule,
-                iconColor: const Color(0xFF4B7BF5),
                 title: 'Paket Pending',
                 count: '22',
                 countColor: Colors.orange,
+                iconAsset: 'assets/images/paket_pending.png',
               ),
             ),
           ],
@@ -351,22 +294,19 @@ class _CourierDashboardScreenState extends State<CourierDashboardScreen> {
           children: [
             Expanded(
               child: _buildStatCard(
-                icon: Icons.inventory_2_outlined,
-                iconColor: const Color(0xFF4B7BF5),
                 title: 'Selesai',
                 count: '13',
                 countColor: Colors.green,
+                iconAsset: 'assets/images/Paket.png',
               ),
             ),
             const SizedBox(width: 16),
             Expanded(
               child: _buildStatCard(
-                icon: Icons.inventory_2_outlined,
-                iconColor: const Color(0xFF4B7BF5),
                 title: 'Batal',
                 count: '2',
                 countColor: Colors.red,
-                hasRedBadge: true,
+                iconAsset: 'assets/images/paket_batal.png',
               ),
             ),
           ],
@@ -462,15 +402,13 @@ class _CourierDashboardScreenState extends State<CourierDashboardScreen> {
   }
 
   Widget _buildStatCard({
-    required IconData icon,
-    required Color iconColor,
     required String title,
     required String count,
     required Color countColor,
-    bool hasRedBadge = false,
+    required String iconAsset,
   }) {
     return Container(
-      padding: const EdgeInsets.all(20),
+      padding: const EdgeInsets.all(10),
       decoration: BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.circular(16),
@@ -484,42 +422,15 @@ class _CourierDashboardScreenState extends State<CourierDashboardScreen> {
       ),
       child: Column(
         children: [
-          Stack(
-            children: [
-              Container(
-                width: 60,
-                height: 60,
-                decoration: BoxDecoration(
-                  color: iconColor.withOpacity(0.1),
-                  borderRadius: BorderRadius.circular(30),
-                ),
-                child: Icon(
-                  icon,
-                  color: iconColor,
-                  size: 30,
-                ),
-              ),
-              if (hasRedBadge)
-                Positioned(
-                  top: 0,
-                  right: 0,
-                  child: Container(
-                    width: 16,
-                    height: 16,
-                    decoration: const BoxDecoration(
-                      color: Colors.red,
-                      shape: BoxShape.circle,
-                    ),
-                    child: const Icon(
-                      Icons.close,
-                      color: Colors.white,
-                      size: 10,
-                    ),
-                  ),
-                ),
-            ],
+          SizedBox(
+            width: 80,
+            height: 60,
+            child: Image.asset(
+              iconAsset,
+              fit: BoxFit.contain,
+            ),
           ),
-          const SizedBox(height: 12),
+          const SizedBox(height: 8),
           Text(
             title,
             style: const TextStyle(
@@ -533,7 +444,7 @@ class _CourierDashboardScreenState extends State<CourierDashboardScreen> {
           Text(
             count,
             style: TextStyle(
-              fontSize: 24,
+              fontSize: 20,
               color: countColor,
               fontWeight: FontWeight.bold,
             ),
@@ -548,13 +459,13 @@ class _CourierDashboardScreenState extends State<CourierDashboardScreen> {
       width: 36,
       height: 36,
       decoration: BoxDecoration(
-        color: Colors.white.withOpacity(0.2),
+        color: Colors.white,
         shape: BoxShape.circle,
       ),
       child: Icon(
         icon,
-        color: Colors.white,
-        size: 18,
+        color: Color(0xFF4B7BF5),
+        size: 30,
       ),
     );
   }

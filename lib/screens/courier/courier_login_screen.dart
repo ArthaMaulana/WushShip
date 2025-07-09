@@ -88,7 +88,7 @@ class _CourierLoginScreenState extends State<CourierLoginScreen> {
                       style: TextStyle(
                         fontSize: 36,
                         fontWeight: FontWeight.bold,
-                        color: Color(0xFFFF8C00), // Orange color for courier
+                        color: Color(0xFF3B5FE8), // Orange color for courier
                       ),
                     ),
 
@@ -137,7 +137,7 @@ class _CourierLoginScreenState extends State<CourierLoginScreen> {
                         child: const Text(
                           'Belum punya akun kurir?',
                           style: TextStyle(
-                            color: Color(0xFFFF8C00),
+                            color: Color(0xFF3B5FE8),
                             fontSize: 14,
                             fontWeight: FontWeight.w500,
                           ),
@@ -155,7 +155,7 @@ class _CourierLoginScreenState extends State<CourierLoginScreen> {
                         onPressed: _isLoading ? null : _handleLogin,
                         style: ElevatedButton.styleFrom(
                           backgroundColor:
-                              const Color(0xFFFF8C00), // Orange for courier
+                              const Color(0xFF3B5FE8), // Orange for courier
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(27.5),
                           ),
@@ -201,7 +201,7 @@ class _CourierLoginScreenState extends State<CourierLoginScreen> {
                           child: const Text(
                             'Hubungi Admin',
                             style: TextStyle(
-                              color: Color(0xFFFF8C00),
+                              color: Color(0xFF3B5FE8),
                               fontSize: 16,
                               fontWeight: FontWeight.w600,
                             ),

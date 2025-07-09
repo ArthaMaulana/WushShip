@@ -4,19 +4,18 @@ import 'package:provider/provider.dart';
 
 import '../../auth/auth_models.dart';
 import '../../auth/mock_auth_service.dart';
-import '../../widgets/user/user_bottom_nav_bar.dart';
-import 'home_screen.dart';
-import 'my_order_screen.dart';
-import 'premium_screen.dart';
+import '../../widgets/courier/courier_bottom_nav_bar.dart';
+import 'courier_chat_screen.dart';
+import 'courier_dashboard_screen.dart';
 
-class ProfileScreen extends StatefulWidget {
-  const ProfileScreen({super.key});
+class CourierProfileScreen extends StatefulWidget {
+  const CourierProfileScreen({super.key});
 
   @override
-  State<ProfileScreen> createState() => _ProfileScreenState();
+  State<CourierProfileScreen> createState() => _CourierProfileScreenState();
 }
 
-class _ProfileScreenState extends State<ProfileScreen> {
+class _CourierProfileScreenState extends State<CourierProfileScreen> {
   @override
   Widget build(BuildContext context) {
     SystemChrome.setSystemUIOverlayStyle(
@@ -32,7 +31,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
         backgroundColor: Colors.white,
         elevation: 0,
         title: const Text(
-          'Profile',
+          'Profile Kurir',
           style: TextStyle(
             color: Colors.black,
             fontSize: 20,
@@ -40,6 +39,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
           ),
         ),
         centerTitle: true,
+        automaticallyImplyLeading: false,
       ),
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(20),
@@ -49,15 +49,13 @@ class _ProfileScreenState extends State<ProfileScreen> {
             // Profile Picture and Info
             const CircleAvatar(
               radius: 50,
-              // backgroundImage: AssetImage(
-              //     'assets/images/Logo.png'),
-              backgroundColor: Colors.grey,
-              child: Icon(Icons.person, size: 50, color: Colors.white),
+              backgroundColor: Color(0xFF4B7BF5),
+              child: Icon(Icons.delivery_dining, size: 50, color: Colors.white),
             ),
             const SizedBox(height: 20),
 
             const Text(
-              'Muhammad Gafri',
+              'Muhammad Rakha R',
               style: TextStyle(
                 fontSize: 24,
                 fontWeight: FontWeight.bold,
@@ -70,7 +68,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 const Text(
-                  'Muhammad@gmail.com',
+                  'rakha.courier@wushship.com',
                   style: TextStyle(fontSize: 16, color: Colors.grey),
                 ),
                 const SizedBox(width: 20),
@@ -80,11 +78,11 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     vertical: 4,
                   ),
                   decoration: BoxDecoration(
-                    color: Colors.red,
+                    color: const Color(0xFF4B7BF5),
                     borderRadius: BorderRadius.circular(12),
                   ),
                   child: const Text(
-                    'Indonesia',
+                    'Kurir Aktif',
                     style: TextStyle(
                       color: Colors.white,
                       fontSize: 12,
@@ -97,7 +95,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
             const SizedBox(height: 40),
 
-            // Profile Complete Banner
+            // Courier Stats Banner
             Container(
               width: double.infinity,
               padding: const EdgeInsets.all(20),
@@ -112,7 +110,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         const Text(
-                          'Profile anda telah lengkap!',
+                          'Status Kurir Aktif!',
                           style: TextStyle(
                             fontSize: 16,
                             fontWeight: FontWeight.bold,
@@ -121,7 +119,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         ),
                         const SizedBox(height: 4),
                         const Text(
-                          'Isi formulir dan nikmati\nsemua fitur yang tersedia.',
+                          'Anda sedang dalam status aktif\ndan siap menerima pesanan.',
                           style: TextStyle(fontSize: 14, color: Colors.grey),
                         ),
                       ],
@@ -135,37 +133,69 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       borderRadius: BorderRadius.circular(30),
                     ),
                     child: const Icon(
-                      Icons.assignment_turned_in,
+                      Icons.delivery_dining,
                       color: Color(0xFF4B7BF5),
                       size: 30,
                     ),
                   ),
-                  const SizedBox(width: 10),
                 ],
               ),
             ),
 
             const SizedBox(height: 40),
 
-            // Profile saya Section
+            // Statistik Kurir Section
             _buildSection(
-              title: 'Profile saya',
+              title: 'Statistik Kurir',
               children: [
                 _buildMenuItem(
-                  icon: Icons.person_outline,
-                  title: 'Pusat akun',
-                  subtitle: 'Kata sandi, Keamanan, Detail Pribadi.',
+                  icon: Icons.local_shipping,
+                  title: 'Total Pengiriman',
+                  subtitle: '156 paket berhasil dikirim',
                   onTap: () {},
                 ),
                 const SizedBox(height: 20),
                 _buildMenuItem(
-                  icon: Icons.delivery_dining,
-                  title: 'Kurir',
-                  subtitle: 'Beralih ke mode kurir',
-                  onTap: () {
-                    _showSwitchToCourierDialog();
-                  },
-                  hasBackground: true,
+                  icon: Icons.star,
+                  title: 'Rating Kurir',
+                  subtitle: '4.8 ⭐ (128 ulasan)',
+                  onTap: () {},
+                ),
+                const SizedBox(height: 20),
+                _buildMenuItem(
+                  icon: Icons.timeline,
+                  title: 'Performa Bulanan',
+                  subtitle: 'Lihat statistik performa Anda',
+                  onTap: () {},
+                ),
+              ],
+            ),
+
+            const SizedBox(height: 40),
+
+            // Profile Kurir Section
+            _buildSection(
+              title: 'Profile Kurir',
+              children: [
+                _buildMenuItem(
+                  icon: Icons.person_outline,
+                  title: 'Informasi Pribadi',
+                  subtitle: 'Ubah data pribadi dan kontak',
+                  onTap: () {},
+                ),
+                const SizedBox(height: 20),
+                _buildMenuItem(
+                  icon: Icons.directions_car,
+                  title: 'Kendaraan',
+                  subtitle: 'Kelola informasi kendaraan',
+                  onTap: () {},
+                ),
+                const SizedBox(height: 20),
+                _buildMenuItem(
+                  icon: Icons.schedule,
+                  title: 'Jadwal Kerja',
+                  subtitle: 'Atur jadwal ketersediaan',
+                  onTap: () {},
                 ),
               ],
             ),
@@ -177,17 +207,24 @@ class _ProfileScreenState extends State<ProfileScreen> {
               title: 'Pengaturan',
               children: [
                 _buildMenuItem(
+                  icon: Icons.notifications,
+                  title: 'Notifikasi',
+                  subtitle: 'Atur preferensi notifikasi',
+                  onTap: () {},
+                ),
+                const SizedBox(height: 20),
+                _buildMenuItem(
                   icon: Icons.language,
                   title: 'Bahasa',
-                  subtitle: '',
+                  subtitle: 'Indonesia',
                   onTap: () {},
                   hasToggle: true,
                 ),
                 const SizedBox(height: 20),
                 _buildMenuItem(
-                  icon: Icons.key,
-                  title: 'Ganti kata sandi',
-                  subtitle: '',
+                  icon: Icons.security,
+                  title: 'Keamanan',
+                  subtitle: 'Kata sandi dan keamanan akun',
                   onTap: () {},
                 ),
               ],
@@ -195,21 +232,21 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
             const SizedBox(height: 40),
 
-            // Tentang Kami Section
+            // Bantuan Section
             _buildSection(
-              title: 'Tentang Kami',
+              title: 'Bantuan',
               children: [
                 _buildMenuItem(
-                  icon: Icons.security,
-                  title: 'Keamanan privasi',
-                  subtitle: '',
+                  icon: Icons.help_outline,
+                  title: 'Pusat Bantuan',
+                  subtitle: 'FAQ dan panduan kurir',
                   onTap: () {},
                 ),
                 const SizedBox(height: 20),
                 _buildMenuItem(
-                  icon: Icons.help_outline,
-                  title: 'FAQ',
-                  subtitle: '',
+                  icon: Icons.phone,
+                  title: 'Hubungi Support',
+                  subtitle: 'Chat dengan tim support',
                   onTap: () {},
                 ),
               ],
@@ -217,15 +254,17 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
             const SizedBox(height: 40),
 
-            // Login Section
+            // Akun Section
             _buildSection(
-              title: 'Login',
+              title: 'Akun',
               children: [
                 _buildLoginButton(
                   icon: Icons.swap_horiz,
-                  title: 'Ganti Akun',
+                  title: 'Ganti Mode ke Pengguna',
                   color: const Color(0xFF4B7BF5),
-                  onTap: () {},
+                  onTap: () {
+                    _showSwitchModeDialog();
+                  },
                 ),
                 const SizedBox(height: 16),
                 _buildLoginButton(
@@ -243,27 +282,23 @@ class _ProfileScreenState extends State<ProfileScreen> {
           ],
         ),
       ),
-      bottomNavigationBar: UserBottomNavBar(
-        currentIndex: 3, // ProfileScreen is at index 3
+      bottomNavigationBar: CourierBottomNavBar(
+        currentIndex: 3, // Profile is at index 3
         onTap: (index) {
           // Navigate to different screens based on bottom nav selection
           if (index == 0) {
-            // Home
+            // Dashboard
             Navigator.pushReplacement(
               context,
-              MaterialPageRoute(builder: (context) => const HomeScreen()),
-            );
-          } else if (index == 1) {
-            // My Orders
-            Navigator.pushReplacement(
-              context,
-              MaterialPageRoute(builder: (context) => const MyOrderScreen()),
+              MaterialPageRoute(
+                  builder: (context) => const CourierDashboardScreen()),
             );
           } else if (index == 2) {
-            // Premium
+            // Chat
             Navigator.pushReplacement(
               context,
-              MaterialPageRoute(builder: (context) => const PremiumScreen()),
+              MaterialPageRoute(
+                  builder: (context) => const CourierChatScreen()),
             );
           }
           // index == 3 (Profile) - stay on current screen
@@ -355,7 +390,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 width: 40,
                 height: 20,
                 decoration: BoxDecoration(
-                  color: Colors.red,
+                  color: const Color(0xFF4B7BF5),
                   borderRadius: BorderRadius.circular(10),
                 ),
                 child: const Align(
@@ -411,13 +446,13 @@ class _ProfileScreenState extends State<ProfileScreen> {
     );
   }
 
-  void _showSwitchToCourierDialog() {
+  void _showSwitchModeDialog() {
     showDialog(
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: const Text('Beralih ke Mode Kurir'),
-          content: const Text('Apakah Anda yakin ingin beralih ke mode kurir?'),
+          title: const Text('Ganti Mode'),
+          content: const Text('Apakah Anda yakin ingin beralih ke mode pengguna?'),
           actions: [
             TextButton(
               onPressed: () {
@@ -428,9 +463,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
             TextButton(
               onPressed: () {
                 Navigator.of(context).pop();
-                _switchToCourierMode();
+                _switchToUserMode();
               },
-              child: const Text('Beralih', style: TextStyle(color: Color(0xFF4B7BF5))),
+              child: const Text('Ganti Mode', style: TextStyle(color: Color(0xFF4B7BF5))),
             ),
           ],
         );
@@ -438,33 +473,33 @@ class _ProfileScreenState extends State<ProfileScreen> {
     );
   }
 
-  void _switchToCourierMode() async {
+  void _switchToUserMode() async {
     try {
       // Get the AuthService instance
       final authService = Provider.of<AuthService>(context, listen: false);
       
-      // Switch user role to courier
-      await authService.switchUserRole(UserRole.courier);
+      // Switch user role to user
+      await authService.switchUserRole(UserRole.user);
       
       // Show success message
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(
-          content: Text('Berhasil beralih ke mode kurir'),
+          content: Text('Berhasil beralih ke mode pengguna'),
           backgroundColor: Colors.green,
           duration: Duration(seconds: 2),
         ),
       );
 
-      // Navigate to courier dashboard and clear all previous routes
+      // Navigate to user home screen and clear all previous routes
       Navigator.of(context).pushNamedAndRemoveUntil(
-        '/courier-dashboard',
+        '/user-home',
         (Route<dynamic> route) => false,
       );
     } catch (e) {
       // Show error message if switch fails
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
-          content: Text('Gagal beralih ke mode kurir: $e'),
+          content: Text('Gagal beralih mode: $e'),
           backgroundColor: Colors.red,
           duration: const Duration(seconds: 2),
         ),
@@ -478,7 +513,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
       builder: (BuildContext context) {
         return AlertDialog(
           title: const Text('Keluar'),
-          content: const Text('Apakah Anda yakin ingin keluar dari akun?'),
+          content:
+              const Text('Apakah Anda yakin ingin keluar dari akun kurir?'),
           actions: [
             TextButton(
               onPressed: () {
@@ -510,7 +546,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
       // Show success message
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(
-          content: Text('Berhasil keluar dari akun'),
+          content: Text('Berhasil keluar dari akun kurir'),
           backgroundColor: Colors.green,
           duration: Duration(seconds: 2),
         ),

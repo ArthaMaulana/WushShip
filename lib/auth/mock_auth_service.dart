@@ -137,6 +137,37 @@ class AuthService extends ChangeNotifier {
     }
   }
 
+  Future<void> switchUserRole(UserRole newRole) async {
+    try {
+      _setState(_state.copyWith(isLoading: true));
+
+      // Simulate API delay
+      await Future.delayed(const Duration(milliseconds: 500));
+
+      // Get current user and update role
+      final currentUser = _state.user;
+      if (currentUser != null) {
+        final updatedUser = AppUser(
+          id: currentUser.id,
+          email: currentUser.email,
+          fullName: currentUser.fullName,
+          phone: currentUser.phone,
+          role: newRole,
+          createdAt: currentUser.createdAt,
+        );
+        
+        _setState(_state.copyWith(
+          user: updatedUser,
+          isLoading: false,
+        ));
+      } else {
+        throw Exception('No user logged in');
+      }
+    } catch (e) {
+      _setState(_state.copyWith(error: 'Switch role failed: $e'));
+    }
+  }
+
   Future<bool> resetPassword(String email) async {
     try {
       _setState(_state.copyWith(isLoading: true));
