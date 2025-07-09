@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
+import '../../widgets/user/user_bottom_nav_bar.dart';
 import '../courier/courier_login_screen.dart';
+import 'home_screen.dart';
+import 'my_order_screen.dart';
+import 'premium_screen.dart';
 
 class ProfileScreen extends StatefulWidget {
   const ProfileScreen({super.key});
@@ -43,8 +47,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
             // Profile Picture and Info
             const CircleAvatar(
               radius: 50,
-              // backgroundImage: AssetImage(
-              //     'assets/images/Logo.png'),
               backgroundColor: Colors.grey,
               child: Icon(
                 Icons.person,
@@ -249,6 +251,32 @@ class _ProfileScreenState extends State<ProfileScreen> {
             const SizedBox(height: 40),
           ],
         ),
+      ),
+      bottomNavigationBar: UserBottomNavBar(
+        currentIndex: 3, // ProfileScreen is at index 3
+        onTap: (index) {
+          // Navigate to different screens based on bottom nav selection
+          if (index == 0) {
+            // Home
+            Navigator.pushReplacement(
+              context,
+              MaterialPageRoute(builder: (context) => const HomeScreen()),
+            );
+          } else if (index == 1) {
+            // My Orders
+            Navigator.pushReplacement(
+              context,
+              MaterialPageRoute(builder: (context) => const MyOrderScreen()),
+            );
+          } else if (index == 2) {
+            // Premium
+            Navigator.pushReplacement(
+              context,
+              MaterialPageRoute(builder: (context) => const PremiumScreen()),
+            );
+          }
+          // index == 3 (Profile) - stay on current screen
+        },
       ),
     );
   }
