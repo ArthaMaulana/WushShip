@@ -16,6 +16,7 @@ import 'screens/user/home_screen.dart';
 import 'screens/user/my_order_screen.dart';
 import 'screens/user/premium_screen.dart';
 import 'screens/user/profile_screen.dart';
+import 'widgets/navigation/main_navigation_wrapper.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -81,7 +82,7 @@ class AuthWrapper extends StatelessWidget {
         if (authService.isAuthenticated) {
           final user = authService.currentUser!;
           if (user.role == UserRole.user) {
-            return const HomeScreen();
+            return const MainNavigationWrapper();
           } else if (user.role == UserRole.courier) {
             return const CourierDashboardScreen();
           }

@@ -1,11 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
-import '../../widgets/user/user_bottom_nav_bar.dart';
-import 'home_screen.dart';
-import 'premium_screen.dart';
-import 'profile_screen.dart';
-
 // Custom painter untuk dotted line
 class DottedLinePainter extends CustomPainter {
   @override
@@ -256,32 +251,6 @@ class _MyOrderScreenState extends State<MyOrderScreen>
           _buildHeader(),
           _buildTabContent(),
         ],
-      ),
-      bottomNavigationBar: UserBottomNavBar(
-        currentIndex: 1, // MyOrderScreen is at index 1
-        onTap: (index) {
-          // Navigate to different screens based on bottom nav selection
-          if (index == 0) {
-            // Home
-            Navigator.pushReplacement(
-              context,
-              MaterialPageRoute(builder: (context) => const HomeScreen()),
-            );
-          } else if (index == 2) {
-            // Premium
-            Navigator.pushReplacement(
-              context,
-              MaterialPageRoute(builder: (context) => const PremiumScreen()),
-            );
-          } else if (index == 3) {
-            // Profile
-            Navigator.pushReplacement(
-              context,
-              MaterialPageRoute(builder: (context) => const ProfileScreen()),
-            );
-          }
-          // index == 1 (MyOrders) - stay on current screen
-        },
       ),
     );
   }

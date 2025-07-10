@@ -243,32 +243,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
           ],
         ),
       ),
-      bottomNavigationBar: UserBottomNavBar(
-        currentIndex: 3, // ProfileScreen is at index 3
-        onTap: (index) {
-          // Navigate to different screens based on bottom nav selection
-          if (index == 0) {
-            // Home
-            Navigator.pushReplacement(
-              context,
-              MaterialPageRoute(builder: (context) => const HomeScreen()),
-            );
-          } else if (index == 1) {
-            // My Orders
-            Navigator.pushReplacement(
-              context,
-              MaterialPageRoute(builder: (context) => const MyOrderScreen()),
-            );
-          } else if (index == 2) {
-            // Premium
-            Navigator.pushReplacement(
-              context,
-              MaterialPageRoute(builder: (context) => const PremiumScreen()),
-            );
-          }
-          // index == 3 (Profile) - stay on current screen
-        },
-      ),
     );
   }
 
