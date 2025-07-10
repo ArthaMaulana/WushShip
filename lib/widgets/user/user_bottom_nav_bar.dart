@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 class UserBottomNavBar extends StatelessWidget {
   final int currentIndex;
@@ -13,63 +14,69 @@ class UserBottomNavBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
-      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 12),
+      margin: const EdgeInsets.symmetric(horizontal: 14, vertical: 14),
+      padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 8),
       decoration: BoxDecoration(
         color: Colors.white,
-        borderRadius: BorderRadius.circular(20),
+        borderRadius: BorderRadius.circular(35),
         boxShadow: [
           BoxShadow(
             color: Colors.black.withOpacity(0.08),
-            blurRadius: 15,
-            offset: const Offset(0, 2),
+            blurRadius: 24,
+            offset: const Offset(0, 4),
           ),
         ],
       ),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [
-          _buildNavItem(0, Icons.home_outlined, Icons.home, 'Utama'),
-          _buildNavItem(
-              1, Icons.local_shipping_outlined, Icons.local_shipping, ''),
-          _buildNavItem(2, Icons.diamond_outlined, Icons.diamond, ''),
-          _buildNavItem(3, Icons.settings_outlined, Icons.settings, ''),
+          _buildNavItem(0, Icons.home_rounded, 'Utama'),
+          _buildNavItem(1, Icons.local_shipping_rounded, 'My Order'),
+          _buildNavItem(2, Icons.diamond_rounded, 'Premium'),
+          _buildNavItem(3, Icons.settings_rounded, 'Settings'),
         ],
       ),
     );
   }
 
-  Widget _buildNavItem(
-      int index, IconData outlinedIcon, IconData filledIcon, String label) {
+  Widget _buildNavItem(int index, IconData icon, String label) {
     final isSelected = index == currentIndex;
-
+    
     return GestureDetector(
-      onTap: () => onTap(index),
+      onTap: () {
+        // Cegah multiple taps dan berikan feedback hanya jika berbeda
+        if (index != currentIndex) {
+          HapticFeedback.lightImpact();
+          onTap(index);
+        }
+      },
       child: AnimatedContainer(
-        duration: const Duration(milliseconds: 250),
+        duration: const Duration(milliseconds: 150), // Kurangi durasi untuk responsivitas
+        curve: Curves.easeOut,
         padding: EdgeInsets.symmetric(
-          horizontal: isSelected ? 16 : 12,
-          vertical: 10,
+          horizontal: isSelected ? 25 : 20,
+          vertical: 12,
         ),
         decoration: BoxDecoration(
           color: isSelected ? const Color(0xFF4B7BF5) : Colors.transparent,
-          borderRadius: BorderRadius.circular(16),
+          borderRadius: BorderRadius.circular(35),
         ),
         child: Row(
           mainAxisSize: MainAxisSize.min,
           children: [
             Icon(
-              isSelected ? filledIcon : outlinedIcon,
+              icon,
               color: isSelected ? Colors.white : const Color(0xFF8F9BB3),
-              size: 22,
+              size: 24, // Gunakan size yang sama untuk mengurangi animasi
             ),
-            if (isSelected && label.isNotEmpty) ...[
+            // Sederhanakan text animation
+            if (isSelected) ...[
               const SizedBox(width: 8),
               Text(
                 label,
                 style: const TextStyle(
                   color: Colors.white,
-                  fontSize: 14,
+                  fontSize: 13,
                   fontWeight: FontWeight.w600,
                 ),
               ),

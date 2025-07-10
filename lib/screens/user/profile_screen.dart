@@ -4,10 +4,6 @@ import 'package:provider/provider.dart';
 
 import '../../auth/auth_models.dart';
 import '../../auth/mock_auth_service.dart';
-import '../../widgets/user/user_bottom_nav_bar.dart';
-import 'home_screen.dart';
-import 'my_order_screen.dart';
-import 'premium_screen.dart';
 
 class ProfileScreen extends StatefulWidget {
   const ProfileScreen({super.key});
@@ -243,32 +239,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
           ],
         ),
       ),
-      bottomNavigationBar: UserBottomNavBar(
-        currentIndex: 3, // ProfileScreen is at index 3
-        onTap: (index) {
-          // Navigate to different screens based on bottom nav selection
-          if (index == 0) {
-            // Home
-            Navigator.pushReplacement(
-              context,
-              MaterialPageRoute(builder: (context) => const HomeScreen()),
-            );
-          } else if (index == 1) {
-            // My Orders
-            Navigator.pushReplacement(
-              context,
-              MaterialPageRoute(builder: (context) => const MyOrderScreen()),
-            );
-          } else if (index == 2) {
-            // Premium
-            Navigator.pushReplacement(
-              context,
-              MaterialPageRoute(builder: (context) => const PremiumScreen()),
-            );
-          }
-          // index == 3 (Profile) - stay on current screen
-        },
-      ),
     );
   }
 
@@ -443,12 +413,14 @@ class _ProfileScreenState extends State<ProfileScreen> {
     try {
       // Get the AuthService instance
       final authService = Provider.of<AuthService>(context, listen: false);
+      final scaffoldMessenger = ScaffoldMessenger.of(context);
+      final navigator = Navigator.of(context);
 
       // Switch user role to courier
       await authService.switchUserRole(UserRole.courier);
 
       // Show success message
-      ScaffoldMessenger.of(context).showSnackBar(
+      scaffoldMessenger.showSnackBar(
         const SnackBar(
           content: Text('Berhasil beralih ke mode kurir'),
           backgroundColor: Colors.green,
@@ -457,19 +429,21 @@ class _ProfileScreenState extends State<ProfileScreen> {
       );
 
       // Navigate to courier dashboard and clear all previous routes
-      Navigator.of(context).pushNamedAndRemoveUntil(
+      navigator.pushNamedAndRemoveUntil(
         '/courier-dashboard',
         (Route<dynamic> route) => false,
       );
     } catch (e) {
       // Show error message if switch fails
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text('Gagal beralih ke mode kurir: $e'),
-          backgroundColor: Colors.red,
-          duration: const Duration(seconds: 2),
-        ),
-      );
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text('Gagal beralih ke mode kurir: $e'),
+            backgroundColor: Colors.red,
+            duration: const Duration(seconds: 2),
+          ),
+        );
+      }
     }
   }
 
@@ -504,12 +478,14 @@ class _ProfileScreenState extends State<ProfileScreen> {
     try {
       // Get the AuthService instance
       final authService = Provider.of<AuthService>(context, listen: false);
+      final scaffoldMessenger = ScaffoldMessenger.of(context);
+      final navigator = Navigator.of(context);
 
       // Perform sign out
       await authService.signOut();
 
       // Show success message
-      ScaffoldMessenger.of(context).showSnackBar(
+      scaffoldMessenger.showSnackBar(
         const SnackBar(
           content: Text('Berhasil keluar dari akun'),
           backgroundColor: Colors.green,
@@ -518,19 +494,21 @@ class _ProfileScreenState extends State<ProfileScreen> {
       );
 
       // Navigate to login screen and clear all previous routes
-      Navigator.of(context).pushNamedAndRemoveUntil(
+      navigator.pushNamedAndRemoveUntil(
         '/login',
         (Route<dynamic> route) => false,
       );
     } catch (e) {
       // Show error message if logout fails
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text('Gagal logout: $e'),
-          backgroundColor: Colors.red,
-          duration: const Duration(seconds: 2),
-        ),
-      );
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text('Gagal logout: $e'),
+            backgroundColor: Colors.red,
+            duration: const Duration(seconds: 2),
+          ),
+        );
+      }
     }
   }
 }

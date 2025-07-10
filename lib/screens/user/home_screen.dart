@@ -1,23 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:wuship_project/screens/user/my_order_screen.dart';
-import 'package:wuship_project/screens/user/premium_screen.dart';
-import 'package:wuship_project/screens/user/profile_screen.dart';
-import 'package:wuship_project/screens/user/shipping_screen.dart';
 
-import '../../widgets/user/user_bottom_nav_bar.dart';
 import 'chat_screen.dart';
 import 'check_price_screen.dart';
 import 'notification_screen.dart';
+import 'shipping_screen.dart';
 
-class HomeScreen extends StatefulWidget {
+class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
 
-  @override
-  State<HomeScreen> createState() => _HomeScreenState();
-}
-
-class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     SystemChrome.setSystemUIOverlayStyle(
@@ -87,13 +78,11 @@ class _HomeScreenState extends State<HomeScreen> {
                                     Navigator.push(
                                       context,
                                       MaterialPageRoute(
-                                        builder: (context) =>
-                                            const ChatScreen(),
+                                        builder: (context) => const ChatScreen(),
                                       ),
                                     );
                                   },
-                                  child: _buildHeaderIcon(
-                                      Icons.headset_mic_outlined),
+                                  child: _buildHeaderIcon(Icons.headset_mic_outlined),
                                 ),
                                 const SizedBox(width: 12),
                                 GestureDetector(
@@ -101,13 +90,11 @@ class _HomeScreenState extends State<HomeScreen> {
                                     Navigator.push(
                                       context,
                                       MaterialPageRoute(
-                                        builder: (context) =>
-                                            const NotificationScreen(),
+                                        builder: (context) => const NotificationScreen(),
                                       ),
                                     );
                                   },
-                                  child: _buildHeaderIcon(
-                                      Icons.notifications_outlined),
+                                  child: _buildHeaderIcon(Icons.notifications_outlined),
                                 ),
                               ],
                             ),
@@ -160,7 +147,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       const SizedBox(height: 24),
 
                       // Fitur Layanan
-                      _buildFiturLayanan(),
+                      _buildFiturLayanan(context),
 
                       const SizedBox(height: 24),
 
@@ -177,8 +164,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
           // Search Bar - Positioned to overlap
           Positioned(
-            top: MediaQuery.of(context).padding.top +
-                190, // Adjust position based on header
+            top: MediaQuery.of(context).padding.top + 190,
             left: 50,
             right: 50,
             child: Container(
@@ -233,38 +219,6 @@ class _HomeScreenState extends State<HomeScreen> {
             ),
           ),
         ],
-      ),
-      bottomNavigationBar: UserBottomNavBar(
-        currentIndex: 0, // HomeScreen is at index 0
-        onTap: (index) {
-          // Navigate to different screens based on bottom nav selection
-          if (index == 1) {
-            // My Orders
-            Navigator.pushReplacement(
-              context,
-              MaterialPageRoute(
-                builder: (context) => const MyOrderScreen(),
-              ),
-            );
-          } else if (index == 2) {
-            // Premium
-            Navigator.pushReplacement(
-              context,
-              MaterialPageRoute(
-                builder: (context) => const PremiumScreen(),
-              ),
-            );
-          } else if (index == 3) {
-            // Profile
-            Navigator.pushReplacement(
-              context,
-              MaterialPageRoute(
-                builder: (context) => const ProfileScreen(),
-              ),
-            );
-          }
-          // index == 0 (Home) - stay on current screen
-        },
       ),
     );
   }
@@ -336,7 +290,7 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
-  Widget _buildFiturLayanan() {
+  Widget _buildFiturLayanan(BuildContext context) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
