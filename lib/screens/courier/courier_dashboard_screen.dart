@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 
 import '../../widgets/courier/courier_bottom_nav_bar.dart';
 import 'courier_chat_screen.dart';
+import 'courier_my_order_screen.dart';
 import 'courier_profile_screen.dart';
 
 class CourierDashboardScreen extends StatefulWidget {
@@ -218,7 +219,15 @@ class _CourierDashboardScreenState extends State<CourierDashboardScreen> {
           });
 
           // Navigate to different screens based on bottom nav selection
-          if (index == 2) {
+          if (index == 1) {
+            // My Order
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => const CourierMyOrderScreen(),
+              ),
+            );
+          } else if (index == 2) {
             // Chat icon
             Navigator.push(
               context,

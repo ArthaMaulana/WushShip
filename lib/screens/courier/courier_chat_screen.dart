@@ -4,6 +4,7 @@ import 'package:flutter/services.dart';
 import '../../widgets/courier/courier_bottom_nav_bar.dart';
 import 'courier_call_screen.dart';
 import 'courier_dashboard_screen.dart';
+import 'courier_my_order_screen.dart';
 import 'courier_profile_screen.dart';
 
 class CourierChatScreen extends StatefulWidget {
@@ -186,9 +187,11 @@ class _CourierChatScreenState extends State<CourierChatScreen> {
                   builder: (context) => const CourierDashboardScreen()),
             );
           } else if (index == 1) {
-            // Orders - TODO: implement orders screen
-            ScaffoldMessenger.of(context).showSnackBar(
-              const SnackBar(content: Text('Orders screen coming soon')),
+            // My Order
+            Navigator.pushReplacement(
+              context,
+              MaterialPageRoute(
+                  builder: (context) => const CourierMyOrderScreen()),
             );
           } else if (index == 3) {
             // Profile

@@ -8,6 +8,7 @@ import 'auth/mock_auth_service.dart';
 // import 'auth/supabase_config.dart';
 import 'providers/app_providers.dart';
 import 'screens/courier/courier_dashboard_screen.dart';
+import 'screens/courier/courier_my_order_screen.dart';
 import 'screens/courier/courier_profile_screen.dart';
 import 'screens/shared/login_screen.dart';
 import 'screens/shared/splash_screen.dart';
@@ -63,6 +64,7 @@ class MyApp extends StatelessWidget {
         '/profile': (context) => const ProfileScreen(),
         '/courier-dashboard': (context) => const CourierDashboardScreen(),
         '/courier-profile': (context) => const CourierProfileScreen(),
+        '/courier-my-order': (context) => const CourierMyOrderScreen(),
       },
     );
   }

@@ -7,6 +7,7 @@ import '../../auth/mock_auth_service.dart';
 import '../../widgets/courier/courier_bottom_nav_bar.dart';
 import 'courier_chat_screen.dart';
 import 'courier_dashboard_screen.dart';
+import 'courier_my_order_screen.dart';
 
 class CourierProfileScreen extends StatefulWidget {
   const CourierProfileScreen({super.key});
@@ -293,6 +294,13 @@ class _CourierProfileScreenState extends State<CourierProfileScreen> {
               MaterialPageRoute(
                   builder: (context) => const CourierDashboardScreen()),
             );
+          } else if (index == 1) {
+            // My Order
+            Navigator.pushReplacement(
+              context,
+              MaterialPageRoute(
+                  builder: (context) => const CourierMyOrderScreen()),
+            );
           } else if (index == 2) {
             // Chat
             Navigator.pushReplacement(
@@ -385,27 +393,6 @@ class _CourierProfileScreenState extends State<CourierProfileScreen> {
                 ],
               ),
             ),
-            if (hasToggle)
-              Container(
-                width: 40,
-                height: 20,
-                decoration: BoxDecoration(
-                  color: const Color(0xFF4B7BF5),
-                  borderRadius: BorderRadius.circular(10),
-                ),
-                child: const Align(
-                  alignment: Alignment.centerRight,
-                  child: Padding(
-                    padding: EdgeInsets.only(right: 2),
-                    child: CircleAvatar(
-                      radius: 8,
-                      backgroundColor: Colors.white,
-                    ),
-                  ),
-                ),
-              )
-            else
-              const Icon(Icons.chevron_right, color: Colors.grey, size: 24),
           ],
         ),
       ),
@@ -452,7 +439,8 @@ class _CourierProfileScreenState extends State<CourierProfileScreen> {
       builder: (BuildContext context) {
         return AlertDialog(
           title: const Text('Ganti Mode'),
-          content: const Text('Apakah Anda yakin ingin beralih ke mode pengguna?'),
+          content:
+              const Text('Apakah Anda yakin ingin beralih ke mode pengguna?'),
           actions: [
             TextButton(
               onPressed: () {
@@ -465,7 +453,8 @@ class _CourierProfileScreenState extends State<CourierProfileScreen> {
                 Navigator.of(context).pop();
                 _switchToUserMode();
               },
-              child: const Text('Ganti Mode', style: TextStyle(color: Color(0xFF4B7BF5))),
+              child: const Text('Ganti Mode',
+                  style: TextStyle(color: Color(0xFF4B7BF5))),
             ),
           ],
         );
@@ -477,10 +466,10 @@ class _CourierProfileScreenState extends State<CourierProfileScreen> {
     try {
       // Get the AuthService instance
       final authService = Provider.of<AuthService>(context, listen: false);
-      
+
       // Switch user role to user
       await authService.switchUserRole(UserRole.user);
-      
+
       // Show success message
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(

@@ -430,7 +430,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 Navigator.of(context).pop();
                 _switchToCourierMode();
               },
-              child: const Text('Beralih', style: TextStyle(color: Color(0xFF4B7BF5))),
+              child: const Text('Beralih',
+                  style: TextStyle(color: Color(0xFF4B7BF5))),
             ),
           ],
         );
@@ -442,10 +443,10 @@ class _ProfileScreenState extends State<ProfileScreen> {
     try {
       // Get the AuthService instance
       final authService = Provider.of<AuthService>(context, listen: false);
-      
+
       // Switch user role to courier
       await authService.switchUserRole(UserRole.courier);
-      
+
       // Show success message
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(

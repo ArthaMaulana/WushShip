@@ -155,7 +155,7 @@ class AuthService extends ChangeNotifier {
           role: newRole,
           createdAt: currentUser.createdAt,
         );
-        
+
         _setState(_state.copyWith(
           user: updatedUser,
           isLoading: false,
