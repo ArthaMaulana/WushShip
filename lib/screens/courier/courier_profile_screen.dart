@@ -466,12 +466,14 @@ class _CourierProfileScreenState extends State<CourierProfileScreen> {
     try {
       // Get the AuthService instance
       final authService = Provider.of<AuthService>(context, listen: false);
+      final scaffoldMessenger = ScaffoldMessenger.of(context);
+      final navigator = Navigator.of(context);
 
       // Switch user role to user
       await authService.switchUserRole(UserRole.user);
 
       // Show success message
-      ScaffoldMessenger.of(context).showSnackBar(
+      scaffoldMessenger.showSnackBar(
         const SnackBar(
           content: Text('Berhasil beralih ke mode pengguna'),
           backgroundColor: Colors.green,
@@ -480,19 +482,21 @@ class _CourierProfileScreenState extends State<CourierProfileScreen> {
       );
 
       // Navigate to user home screen and clear all previous routes
-      Navigator.of(context).pushNamedAndRemoveUntil(
+      navigator.pushNamedAndRemoveUntil(
         '/user-home',
         (Route<dynamic> route) => false,
       );
     } catch (e) {
       // Show error message if switch fails
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text('Gagal beralih mode: $e'),
-          backgroundColor: Colors.red,
-          duration: const Duration(seconds: 2),
-        ),
-      );
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text('Gagal beralih mode: $e'),
+            backgroundColor: Colors.red,
+            duration: const Duration(seconds: 2),
+          ),
+        );
+      }
     }
   }
 
@@ -528,12 +532,14 @@ class _CourierProfileScreenState extends State<CourierProfileScreen> {
     try {
       // Get the AuthService instance
       final authService = Provider.of<AuthService>(context, listen: false);
+      final scaffoldMessenger = ScaffoldMessenger.of(context);
+      final navigator = Navigator.of(context);
 
       // Perform sign out
       await authService.signOut();
 
       // Show success message
-      ScaffoldMessenger.of(context).showSnackBar(
+      scaffoldMessenger.showSnackBar(
         const SnackBar(
           content: Text('Berhasil keluar dari akun kurir'),
           backgroundColor: Colors.green,
@@ -542,19 +548,21 @@ class _CourierProfileScreenState extends State<CourierProfileScreen> {
       );
 
       // Navigate to login screen and clear all previous routes
-      Navigator.of(context).pushNamedAndRemoveUntil(
+      navigator.pushNamedAndRemoveUntil(
         '/login',
         (Route<dynamic> route) => false,
       );
     } catch (e) {
       // Show error message if logout fails
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text('Gagal logout: $e'),
-          backgroundColor: Colors.red,
-          duration: const Duration(seconds: 2),
-        ),
-      );
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text('Gagal logout: $e'),
+            backgroundColor: Colors.red,
+            duration: const Duration(seconds: 2),
+          ),
+        );
+      }
     }
   }
 }

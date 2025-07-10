@@ -801,20 +801,27 @@ class _MyOrderScreenState extends State<MyOrderScreen>
     ];
 
     // Filter berdasarkan kategori atau status
-    if (type == 'all') return allOrders;
-    if (type == 'forme')
+    if (type == 'all') {
+      return allOrders;
+    }
+    if (type == 'forme') {
       return allOrders.where((order) => order['category'] == 'forme').toList();
-    if (type == 'fromme')
+    }
+    if (type == 'fromme') {
       return allOrders.where((order) => order['category'] == 'fromme').toList();
-    if (type == 'pending')
+    }
+    if (type == 'pending') {
       return allOrders.where((order) => order['status'] == 'pending').toList();
-    if (type == 'progress')
+    }
+    if (type == 'progress') {
       return allOrders.where((order) => order['status'] == 'progress').toList();
-    if (type == 'delivered')
+    }
+    if (type == 'delivered') {
       return allOrders
           .where((order) =>
               order['status'] == 'delivered' || order['status'] == 'complete')
           .toList();
+    }
 
     return allOrders;
   }

@@ -542,7 +542,7 @@ class _PremiumScreenState extends State<PremiumScreen>
         curve: Curves.easeInOut,
         transform: Matrix4.identity()..scale(isSelected ? 1.02 : 1.0),
         child: TweenAnimationBuilder<double>(
-          key: ValueKey('pricing_${title}_${isSelected}'), // Key unik untuk restart animasi
+          key: ValueKey('pricing_${title}_$isSelected'), // Key unik untuk restart animasi
           duration: const Duration(milliseconds: 800),
           tween: Tween(begin: 0.0, end: 1.0),
           builder: (context, animationValue, child) {
