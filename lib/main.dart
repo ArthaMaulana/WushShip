@@ -59,13 +59,15 @@ class MyApp extends StatelessWidget {
       home: const AuthWrapper(),
       routes: {
         '/login': (context) => const LoginScreen(),
+        '/main': (context) => const MainNavigationWrapper(),
+        '/courier-dashboard': (context) => const CourierDashboardScreen(),
+        '/courier-profile': (context) => const CourierProfileScreen(),
+        '/courier-my-order': (context) => const CourierMyOrderScreen(),
+        // Individual screens untuk deep linking atau navigasi khusus
         '/user-home': (context) => const HomeScreen(),
         '/my-orders': (context) => const MyOrderScreen(),
         '/premium': (context) => const PremiumScreen(),
         '/profile': (context) => const ProfileScreen(),
-        '/courier-dashboard': (context) => const CourierDashboardScreen(),
-        '/courier-profile': (context) => const CourierProfileScreen(),
-        '/courier-my-order': (context) => const CourierMyOrderScreen(),
       },
     );
   }

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:wuship_project/screens/user/home_screen.dart';
 
 class PremiumScreen extends StatefulWidget {
   final VoidCallback? onBack;
@@ -9,15 +10,15 @@ class PremiumScreen extends StatefulWidget {
   State<PremiumScreen> createState() => _PremiumScreenState();
 }
 
-class _PremiumScreenState extends State<PremiumScreen> 
+class _PremiumScreenState extends State<PremiumScreen>
     with TickerProviderStateMixin {
   int selectedPlan = 1; // 0 = Monthly, 1 = Yearly
-  
+
   // Animation controllers
   late AnimationController _fadeController;
   late AnimationController _slideController;
   late AnimationController _scaleController;
-  
+
   // Animations
   late Animation<double> _fadeAnimation;
   late Animation<Offset> _slideAnimation;
@@ -26,23 +27,23 @@ class _PremiumScreenState extends State<PremiumScreen>
   @override
   void initState() {
     super.initState();
-    
+
     // Initialize animation controllers
     _fadeController = AnimationController(
       duration: const Duration(milliseconds: 1000),
       vsync: this,
     );
-    
+
     _slideController = AnimationController(
       duration: const Duration(milliseconds: 800),
       vsync: this,
     );
-    
+
     _scaleController = AnimationController(
       duration: const Duration(milliseconds: 600),
       vsync: this,
     );
-    
+
     // Initialize animations
     _fadeAnimation = Tween<double>(
       begin: 0.0,
@@ -51,7 +52,7 @@ class _PremiumScreenState extends State<PremiumScreen>
       parent: _fadeController,
       curve: Curves.easeInOut,
     ));
-    
+
     _slideAnimation = Tween<Offset>(
       begin: const Offset(0, 0.3),
       end: Offset.zero,
@@ -59,7 +60,7 @@ class _PremiumScreenState extends State<PremiumScreen>
       parent: _slideController,
       curve: Curves.easeOutCubic,
     ));
-    
+
     _scaleAnimation = Tween<double>(
       begin: 0.8,
       end: 1.0,
@@ -67,44 +68,44 @@ class _PremiumScreenState extends State<PremiumScreen>
       parent: _scaleController,
       curve: Curves.elasticOut,
     ));
-    
+
     // Start animations immediately when screen loads
     _startAnimations();
   }
-  
+
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
     // Reset dan restart animasi setiap kali screen menjadi visible
     _resetAndStartAnimations();
   }
-  
+
   void _resetAndStartAnimations() {
     // Reset semua animasi ke posisi awal
     _fadeController.reset();
     _slideController.reset();
     _scaleController.reset();
-    
+
     // Start animasi dengan delay yang tepat
     _startAnimations();
   }
-  
+
   void _startAnimations() async {
     // Pastikan widget masih mounted sebelum memulai animasi
     if (!mounted) return;
-    
+
     // Start fade animation
     _fadeController.forward();
-    
+
     // Start slide animation with delay
     await Future.delayed(const Duration(milliseconds: 200));
     if (mounted) _slideController.forward();
-    
+
     // Start scale animation with delay
     await Future.delayed(const Duration(milliseconds: 300));
     if (mounted) _scaleController.forward();
   }
-  
+
   @override
   void dispose() {
     _fadeController.dispose();
@@ -123,11 +124,12 @@ class _PremiumScreenState extends State<PremiumScreen>
         elevation: 0,
         leading: GestureDetector(
           onTap: () {
-            if (widget.onBack != null) {
-              widget.onBack!();
-            } else {
-              Navigator.pop(context);
-            }
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => const HomeScreen(),
+              ),
+            );
           },
           child: const Icon(
             Icons.arrow_back_ios,
@@ -157,7 +159,8 @@ class _PremiumScreenState extends State<PremiumScreen>
         ],
       ),
       body: AnimatedBuilder(
-        animation: Listenable.merge([_fadeController, _slideController, _scaleController]),
+        animation: Listenable.merge(
+            [_fadeController, _slideController, _scaleController]),
         builder: (context, child) {
           return Container(
             decoration: const BoxDecoration(
@@ -261,14 +264,18 @@ class _PremiumScreenState extends State<PremiumScreen>
                             padding: const EdgeInsets.symmetric(horizontal: 24),
                             child: Column(
                               children: [
-                                _buildAnimatedFeatureItem('Membuka fitur sekejul', 0),
-                                const SizedBox(height: 14),
-                                _buildAnimatedFeatureItem('Mempermudah pendistribusian anda', 1),
-                                const SizedBox(height: 14),
-                                _buildAnimatedFeatureItem('Membuka fitur titik koordinat', 2),
+                                _buildAnimatedFeatureItem(
+                                    'Membuka fitur sekejul', 0),
                                 const SizedBox(height: 14),
                                 _buildAnimatedFeatureItem(
-                                    'Barang anda bisa untuk dijemput oleh kurir', 3),
+                                    'Mempermudah pendistribusian anda', 1),
+                                const SizedBox(height: 14),
+                                _buildAnimatedFeatureItem(
+                                    'Membuka fitur titik koordinat', 2),
+                                const SizedBox(height: 14),
+                                _buildAnimatedFeatureItem(
+                                    'Barang anda bisa untuk dijemput oleh kurir',
+                                    3),
                               ],
                             ),
                           ),
@@ -280,7 +287,8 @@ class _PremiumScreenState extends State<PremiumScreen>
                             key: const ValueKey('pricing_plans_animation'),
                             scale: _scaleAnimation,
                             child: Container(
-                              margin: const EdgeInsets.symmetric(horizontal: 24),
+                              margin:
+                                  const EdgeInsets.symmetric(horizontal: 24),
                               child: Row(
                                 children: [
                                   // ...existing pricing cards...
@@ -324,31 +332,40 @@ class _PremiumScreenState extends State<PremiumScreen>
 
                           // Subscribe button with enhanced animations
                           TweenAnimationBuilder<double>(
-                            key: const ValueKey('subscribe_button'), // Key unik untuk restart animasi
+                            key: const ValueKey(
+                                'subscribe_button'), // Key unik untuk restart animasi
                             duration: const Duration(milliseconds: 1400),
                             tween: Tween(begin: 0.0, end: 1.0),
                             builder: (context, animationValue, child) {
                               return Transform.translate(
                                 offset: Offset(0, 50 * (1 - animationValue)),
                                 child: Transform.scale(
-                                  scale: 0.7 + (0.3 * animationValue), // Scale dari 0.7 ke 1.0
+                                  scale: 0.7 +
+                                      (0.3 *
+                                          animationValue), // Scale dari 0.7 ke 1.0
                                   child: Opacity(
                                     opacity: animationValue,
                                     child: ScaleTransition(
                                       scale: _scaleAnimation,
                                       child: Padding(
-                                        padding: const EdgeInsets.symmetric(horizontal: 24),
+                                        padding: const EdgeInsets.symmetric(
+                                            horizontal: 24),
                                         child: SizedBox(
                                           width: double.infinity,
                                           child: Container(
                                             decoration: BoxDecoration(
-                                              borderRadius: BorderRadius.circular(16),
+                                              borderRadius:
+                                                  BorderRadius.circular(16),
                                               boxShadow: [
                                                 BoxShadow(
-                                                  color: const Color(0xFF4B7BF5).withOpacity(0.4 * animationValue),
-                                                  blurRadius: 20 * animationValue,
+                                                  color: const Color(0xFF4B7BF5)
+                                                      .withOpacity(
+                                                          0.4 * animationValue),
+                                                  blurRadius:
+                                                      20 * animationValue,
                                                   spreadRadius: 0,
-                                                  offset: Offset(0, 8 * animationValue),
+                                                  offset: Offset(
+                                                      0, 8 * animationValue),
                                                 ),
                                               ],
                                             ),
@@ -357,55 +374,87 @@ class _PremiumScreenState extends State<PremiumScreen>
                                               builder: (context, child) {
                                                 return Container(
                                                   decoration: BoxDecoration(
-                                                    borderRadius: BorderRadius.circular(16),
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            16),
                                                     gradient: LinearGradient(
                                                       colors: [
                                                         const Color(0xFF4B7BF5),
                                                         Color.lerp(
-                                                          const Color(0xFF4B7BF5).withOpacity(0.6),
-                                                          const Color(0xFF4B7BF5),
-                                                          _fadeController.value
-                                                        )!,
+                                                            const Color(
+                                                                    0xFF4B7BF5)
+                                                                .withOpacity(
+                                                                    0.6),
+                                                            const Color(
+                                                                0xFF4B7BF5),
+                                                            _fadeController
+                                                                .value)!,
                                                         const Color(0xFF4B7BF5),
                                                       ],
-                                                      stops: [0.0, _fadeController.value, 1.0],
-                                                      begin: const Alignment(-1.0, 0.0),
-                                                      end: const Alignment(1.0, 0.0),
+                                                      stops: [
+                                                        0.0,
+                                                        _fadeController.value,
+                                                        1.0
+                                                      ],
+                                                      begin: const Alignment(
+                                                          -1.0, 0.0),
+                                                      end: const Alignment(
+                                                          1.0, 0.0),
                                                     ),
                                                   ),
                                                   child: ElevatedButton(
                                                     onPressed: () {
                                                       _handleSubscribe(context);
                                                     },
-                                                    style: ElevatedButton.styleFrom(
-                                                      backgroundColor: Colors.transparent,
-                                                      foregroundColor: Colors.white,
-                                                      padding: const EdgeInsets.symmetric(vertical: 18),
-                                                      shape: RoundedRectangleBorder(
-                                                        borderRadius: BorderRadius.circular(16),
+                                                    style: ElevatedButton
+                                                        .styleFrom(
+                                                      backgroundColor:
+                                                          Colors.transparent,
+                                                      foregroundColor:
+                                                          Colors.white,
+                                                      padding: const EdgeInsets
+                                                          .symmetric(
+                                                          vertical: 18),
+                                                      shape:
+                                                          RoundedRectangleBorder(
+                                                        borderRadius:
+                                                            BorderRadius
+                                                                .circular(16),
                                                       ),
                                                       elevation: 0,
-                                                      shadowColor: Colors.transparent,
+                                                      shadowColor:
+                                                          Colors.transparent,
                                                     ).copyWith(
                                                       overlayColor:
-                                                          WidgetStateProperty.resolveWith((states) {
-                                                        if (states.contains(WidgetState.pressed)) {
-                                                          return Colors.white.withOpacity(0.2);
+                                                          WidgetStateProperty
+                                                              .resolveWith(
+                                                                  (states) {
+                                                        if (states.contains(
+                                                            WidgetState
+                                                                .pressed)) {
+                                                          return Colors.white
+                                                              .withOpacity(0.2);
                                                         }
-                                                        if (states.contains(WidgetState.hovered)) {
-                                                          return Colors.white.withOpacity(0.1);
+                                                        if (states.contains(
+                                                            WidgetState
+                                                                .hovered)) {
+                                                          return Colors.white
+                                                              .withOpacity(0.1);
                                                         }
                                                         return null;
                                                       }),
                                                     ),
                                                     child: const Row(
-                                                      mainAxisAlignment: MainAxisAlignment.center,
+                                                      mainAxisAlignment:
+                                                          MainAxisAlignment
+                                                              .center,
                                                       children: [
                                                         Text(
                                                           'Subscribe',
                                                           style: TextStyle(
                                                             fontSize: 18,
-                                                            fontWeight: FontWeight.w600,
+                                                            fontWeight:
+                                                                FontWeight.w600,
                                                             letterSpacing: 0.5,
                                                           ),
                                                         ),
@@ -461,11 +510,8 @@ class _PremiumScreenState extends State<PremiumScreen>
                   scale: 0.5 + (0.5 * value), // Scale dari 0.5 ke 1.0
                   child: Icon(
                     Icons.check_circle,
-                    color: Color.lerp(
-                      const Color(0xFF4B7BF5).withOpacity(0.3), 
-                      const Color(0xFF4B7BF5), 
-                      value
-                    ),
+                    color: Color.lerp(const Color(0xFF4B7BF5).withOpacity(0.3),
+                        const Color(0xFF4B7BF5), value),
                     size: 24,
                   ),
                 ),
@@ -475,10 +521,7 @@ class _PremiumScreenState extends State<PremiumScreen>
                     text,
                     style: TextStyle(
                       color: Color.lerp(
-                        Colors.white.withOpacity(0.3),
-                        Colors.white,
-                        value
-                      ),
+                          Colors.white.withOpacity(0.3), Colors.white, value),
                       fontSize: 16,
                       fontWeight: FontWeight.w400,
                     ),
@@ -542,7 +585,8 @@ class _PremiumScreenState extends State<PremiumScreen>
         curve: Curves.easeInOut,
         transform: Matrix4.identity()..scale(isSelected ? 1.02 : 1.0),
         child: TweenAnimationBuilder<double>(
-          key: ValueKey('pricing_${title}_$isSelected'), // Key unik untuk restart animasi
+          key: ValueKey(
+              'pricing_${title}_$isSelected'), // Key unik untuk restart animasi
           duration: const Duration(milliseconds: 800),
           tween: Tween(begin: 0.0, end: 1.0),
           builder: (context, animationValue, child) {
@@ -556,16 +600,21 @@ class _PremiumScreenState extends State<PremiumScreen>
                     height: 130,
                     padding: const EdgeInsets.all(16),
                     decoration: BoxDecoration(
-                      color: isSelected ? const Color(0xFF4B7BF5) : Colors.transparent,
+                      color: isSelected
+                          ? const Color(0xFF4B7BF5)
+                          : Colors.transparent,
                       borderRadius: BorderRadius.circular(16),
                       border: Border.all(
-                        color: isSelected ? Colors.white : Colors.white.withOpacity(0.3),
+                        color: isSelected
+                            ? Colors.white
+                            : Colors.white.withOpacity(0.3),
                         width: 2,
                       ),
                       boxShadow: isSelected
                           ? [
                               BoxShadow(
-                                color: const Color(0xFF4B7BF5).withOpacity(0.3 * animationValue),
+                                color: const Color(0xFF4B7BF5)
+                                    .withOpacity(0.3 * animationValue),
                                 blurRadius: 15 * animationValue,
                                 spreadRadius: 0,
                                 offset: Offset(0, 6 * animationValue),
@@ -579,8 +628,9 @@ class _PremiumScreenState extends State<PremiumScreen>
                         Text(
                           title,
                           style: TextStyle(
-                            color:
-                                isSelected ? Colors.white : Colors.white.withOpacity(0.9),
+                            color: isSelected
+                                ? Colors.white
+                                : Colors.white.withOpacity(0.9),
                             fontSize: 13,
                             fontWeight: FontWeight.w500,
                           ),

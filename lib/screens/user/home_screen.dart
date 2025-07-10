@@ -1,9 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
+import '../../widgets/user/user_bottom_nav_bar.dart';
 import 'chat_screen.dart';
 import 'check_price_screen.dart';
+import 'my_order_screen.dart';
 import 'notification_screen.dart';
+import 'premium_screen.dart';
+import 'profile_screen.dart';
 import 'shipping_screen.dart';
 
 class HomeScreen extends StatelessWidget {
@@ -46,6 +50,7 @@ class HomeScreen extends StatelessWidget {
                     padding: const EdgeInsets.all(20),
                     child: Column(
                       children: [
+                        // ...existing code...
                         // Top bar with greeting and icons
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -78,11 +83,13 @@ class HomeScreen extends StatelessWidget {
                                     Navigator.push(
                                       context,
                                       MaterialPageRoute(
-                                        builder: (context) => const ChatScreen(),
+                                        builder: (context) =>
+                                            const ChatScreen(),
                                       ),
                                     );
                                   },
-                                  child: _buildHeaderIcon(Icons.headset_mic_outlined),
+                                  child: _buildHeaderIcon(
+                                      Icons.headset_mic_outlined),
                                 ),
                                 const SizedBox(width: 12),
                                 GestureDetector(
@@ -90,11 +97,13 @@ class HomeScreen extends StatelessWidget {
                                     Navigator.push(
                                       context,
                                       MaterialPageRoute(
-                                        builder: (context) => const NotificationScreen(),
+                                        builder: (context) =>
+                                            const NotificationScreen(),
                                       ),
                                     );
                                   },
-                                  child: _buildHeaderIcon(Icons.notifications_outlined),
+                                  child: _buildHeaderIcon(
+                                      Icons.notifications_outlined),
                                 ),
                               ],
                             ),
@@ -219,6 +228,32 @@ class HomeScreen extends StatelessWidget {
             ),
           ),
         ],
+      ),
+      bottomNavigationBar: UserBottomNavBar(
+        currentIndex: 0, // HomeScreen is at index 0
+        onTap: (index) {
+          // Navigate to different screens based on bottom nav selection
+          if (index == 1) {
+            // My Orders
+            Navigator.pushReplacement(
+              context,
+              MaterialPageRoute(builder: (context) => const MyOrderScreen()),
+            );
+          } else if (index == 2) {
+            // Premium
+            Navigator.pushReplacement(
+              context,
+              MaterialPageRoute(builder: (context) => const PremiumScreen()),
+            );
+          } else if (index == 3) {
+            // Profile
+            Navigator.pushReplacement(
+              context,
+              MaterialPageRoute(builder: (context) => const ProfileScreen()),
+            );
+          }
+          // index == 0 (Home) - stay on current screen
+        },
       ),
     );
   }
